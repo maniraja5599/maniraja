@@ -50,7 +50,62 @@ const App = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-300 font-sans selection:bg-emerald-500/30 relative">
+    <div className="min-h-screen bg-slate-950 text-slate-300 font-sans selection:bg-emerald-500/30 relative overflow-hidden">
+      {/* Animated Background */}
+      <div className="fixed inset-0 -z-10 overflow-hidden">
+        {/* Gradient Background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950"></div>
+        
+        {/* Wavy Lines */}
+        <svg className="absolute inset-0 w-full h-full opacity-10" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#10b981" />
+              <stop offset="50%" stopColor="#06b6d4" />
+              <stop offset="100%" stopColor="#3b82f6" />
+            </linearGradient>
+          </defs>
+          <path d="M0,100 Q250,50 500,100 T1000,100 L1000,0 L0,0 Z" fill="url(#waveGradient)" opacity="0.3" className="animate-pulse" />
+          <path d="M0,150 Q250,100 500,150 T1000,150 L1000,0 L0,0 Z" fill="url(#waveGradient)" opacity="0.2" className="animate-pulse" style={{animationDelay: '0.5s'}} />
+        </svg>
+
+        {/* Candlestick Chart Background */}
+        <div className="absolute top-20 right-40 w-96 h-96 opacity-5">
+          <svg viewBox="0 0 400 300" className="w-full h-full">
+            {/* Candlesticks */}
+            <line x1="30" y1="150" x2="30" y2="80" stroke="#10b981" strokeWidth="8" strokeLinecap="round" />
+            <rect x="20" y="100" width="20" height="50" fill="#10b981" opacity="0.8" />
+            
+            <line x1="80" y1="160" x2="80" y2="90" stroke="#06b6d4" strokeWidth="8" strokeLinecap="round" />
+            <rect x="70" y="110" width="20" height="50" fill="#06b6d4" opacity="0.8" />
+            
+            <line x1="130" y1="140" x2="130" y2="70" stroke="#3b82f6" strokeWidth="8" strokeLinecap="round" />
+            <rect x="120" y="90" width="20" height="50" fill="#3b82f6" opacity="0.8" />
+            
+            <line x1="180" y1="170" x2="180" y2="85" stroke="#10b981" strokeWidth="8" strokeLinecap="round" />
+            <rect x="170" y="115" width="20" height="55" fill="#10b981" opacity="0.8" />
+            
+            <line x1="230" y1="130" x2="230" y2="75" stroke="#06b6d4" strokeWidth="8" strokeLinecap="round" />
+            <rect x="220" y="95" width="20" height="35" fill="#06b6d4" opacity="0.8" />
+            
+            <line x1="280" y1="150" x2="280" y2="60" stroke="#3b82f6" strokeWidth="8" strokeLinecap="round" />
+            <rect x="270" y="85" width="20" height="65" fill="#3b82f6" opacity="0.8" />
+            
+            <line x1="330" y1="120" x2="330" y2="50" stroke="#10b981" strokeWidth="8" strokeLinecap="round" />
+            <rect x="320" y="75" width="20" height="45" fill="#10b981" opacity="0.8" />
+            
+            {/* Trend Line */}
+            <path d="M20 180 Q100 150 200 120 T380 80" stroke="#06b6d4" strokeWidth="3" fill="none" opacity="0.5" strokeDasharray="5,5" />
+          </svg>
+        </div>
+
+        {/* Left Side Accent */}
+        <div className="absolute top-0 -left-32 w-96 h-96 bg-gradient-to-r from-emerald-500/10 to-transparent rounded-full blur-3xl"></div>
+        
+        {/* Right Side Accent */}
+        <div className="absolute bottom-0 -right-32 w-96 h-96 bg-gradient-to-l from-cyan-500/10 to-transparent rounded-full blur-3xl"></div>
+      </div>
+
       {/* Navigation */}
       <nav className={`fixed top-0 w-full z-40 transition-all duration-300 print:hidden ${isScrolled ? 'bg-slate-950/90 backdrop-blur-md border-b border-slate-800/50 py-3' : 'bg-transparent py-5'}`}>
         <div className="max-w-6xl mx-auto px-6 flex justify-between items-center">
