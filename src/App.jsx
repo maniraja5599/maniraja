@@ -688,42 +688,42 @@ const App = () => {
         </section>
 
         {/* CONTACT SECTION */}
-        <section id="contact" className="py-20 border-t border-slate-800/50 pb-32">
-          <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-8 md:p-12 text-center max-w-4xl mx-auto shadow-2xl shadow-emerald-900/10">
-            <div className="mb-8">
-              <div className="inline-flex items-center justify-center p-4 bg-emerald-500/10 rounded-2xl mb-4">
-                <Activity size={32} className="text-emerald-400" />
+        <section id="contact" className="py-12 border-t border-slate-800/50 pb-24">
+          <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border border-slate-800 rounded-2xl p-6 md:p-8 text-center max-w-3xl mx-auto shadow-2xl shadow-emerald-900/10">
+            <div className="mb-6">
+              <div className="inline-flex items-center justify-center p-3 bg-emerald-500/10 rounded-2xl mb-3">
+                <Activity size={28} className="text-emerald-400" />
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Let's Build Something Great</h2>
-              <p className="text-slate-400 mb-10 max-w-2xl mx-auto text-lg">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">Let's Build Something Great</h2>
+              <p className="text-slate-400 mb-8 max-w-xl mx-auto text-base">
                 Whether you need a custom algorithmic trading system, an operational automation tool, or a high-performance web dashboard, I'm ready to collaborate.
               </p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-              <a href="mailto:manirajankg@gmail.com" className="group flex flex-col items-center justify-center p-6 bg-slate-800/50 hover:bg-emerald-500/10 border border-slate-700 hover:border-emerald-500/50 rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-emerald-500/20">
-                <div className="p-3 bg-slate-800 group-hover:bg-emerald-500/20 rounded-full transition-colors mb-3">
-                  <Mail size={24} className="text-slate-300 group-hover:text-emerald-400" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
+              <a href="mailto:manirajankg@gmail.com" className="group flex flex-col items-center justify-center p-5 bg-slate-800/50 hover:bg-emerald-500/10 border border-slate-700 hover:border-emerald-500/50 rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-emerald-500/20">
+                <div className="p-2.5 bg-slate-800 group-hover:bg-emerald-500/20 rounded-full transition-colors mb-2">
+                  <Mail size={22} className="text-slate-300 group-hover:text-emerald-400" />
                 </div>
-                <span className="font-medium text-lg text-slate-300 group-hover:text-emerald-300 mb-1">Email Me</span>
-                <span className="text-sm text-slate-500 group-hover:text-emerald-500">manirajankg@gmail.com</span>
+                <span className="font-medium text-base text-slate-300 group-hover:text-emerald-300 mb-1">Email Me</span>
+                <span className="text-xs text-slate-500 group-hover:text-emerald-500">manirajankg@gmail.com</span>
               </a>
               
-              <a href="tel:+919159036301" className="group flex flex-col items-center justify-center p-6 bg-slate-800/50 hover:bg-emerald-500/10 border border-slate-700 hover:border-emerald-500/50 rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-emerald-500/20">
-                <div className="p-3 bg-slate-800 group-hover:bg-emerald-500/20 rounded-full transition-colors mb-3">
-                  <Phone size={24} className="text-slate-300 group-hover:text-emerald-400" />
+              <a href="tel:+919159036301" className="group flex flex-col items-center justify-center p-5 bg-slate-800/50 hover:bg-emerald-500/10 border border-slate-700 hover:border-emerald-500/50 rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-emerald-500/20">
+                <div className="p-2.5 bg-slate-800 group-hover:bg-emerald-500/20 rounded-full transition-colors mb-2">
+                  <Phone size={22} className="text-slate-300 group-hover:text-emerald-400" />
                 </div>
-                <span className="font-medium text-lg text-slate-300 group-hover:text-emerald-300 mb-1">Call Me</span>
-                <span className="text-sm text-slate-500 group-hover:text-emerald-500">+91-91590 36301</span>
+                <span className="font-medium text-base text-slate-300 group-hover:text-emerald-300 mb-1">Call Me</span>
+                <span className="text-xs text-slate-500 group-hover:text-emerald-500">+91-91590 36301</span>
               </a>
             </div>
 
-            <div className="flex justify-center gap-6 pt-8 border-t border-slate-800">
-              <a href="https://github.com/maniraja5599" target="_blank" rel="noreferrer" className="p-3 bg-slate-800 rounded-full text-slate-400 hover:text-white hover:bg-slate-700 hover:shadow-lg hover:shadow-white/10 transition-all duration-300 hover:-translate-y-1">
-                <Github size={24} />
+            <div className="flex justify-center gap-5 pt-6 border-t border-slate-800">
+              <a href="https://github.com/maniraja5599" target="_blank" rel="noreferrer" className="p-2.5 bg-slate-800 rounded-full text-slate-400 hover:text-white hover:bg-slate-700 hover:shadow-lg hover:shadow-white/10 transition-all duration-300 hover:-translate-y-1">
+                <Github size={22} />
               </a>
-              <a href="https://in.linkedin.com/in/maniraja5599" target="_blank" rel="noreferrer" className="p-3 bg-slate-800 rounded-full text-slate-400 hover:text-[#0A66C2] hover:bg-slate-700 hover:shadow-lg hover:shadow-[#0A66C2]/20 transition-all duration-300 hover:-translate-y-1">
-                <Linkedin size={24} />
+              <a href="https://in.linkedin.com/in/maniraja5599" target="_blank" rel="noreferrer" className="p-2.5 bg-slate-800 rounded-full text-slate-400 hover:text-[#0A66C2] hover:bg-slate-700 hover:shadow-lg hover:shadow-[#0A66C2]/20 transition-all duration-300 hover:-translate-y-1">
+                <Linkedin size={22} />
               </a>
             </div>
           </div>
