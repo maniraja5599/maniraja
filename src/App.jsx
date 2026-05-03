@@ -859,13 +859,31 @@ const App = () => {
                {/* Projects */}
                <section className="print:break-inside-avoid">
                  <h2 className="text-xl font-bold text-white print:text-black border-l-4 border-emerald-500 pl-3 mb-4">FEATURED PROJECTS</h2>
-                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-slate-400 print:text-gray-700">
-                   <div>• <strong>FiFTO Trading Dashboard</strong> - Real-time equity tracking</div>
-                   <div>• <strong>FiFTO Scanner</strong> - Breakout detection & Telegram alerts</div>
-                   <div>• <strong>Trading Strategy App</strong> - Web app for backtesting</div>
-                   <div>• <strong>Live TV Anywhere</strong> - QR Remote Control System</div>
-                   <div>• <strong>Borewell Management System</strong> - Legacy Sheets/AppSheet system</div>
-                   <div>• <strong>Eyas Drapist E-commerce</strong> - Retail storefront</div>
+                 <div className="space-y-3 text-sm text-slate-400 print:text-gray-700">
+                   <div>
+                     <strong className="text-slate-300 print:text-black">FiFTO Trading Dashboard</strong>
+                     <span className="ml-2 text-emerald-400 print:text-emerald-600">https://fifto-eq-trade.lovable.app/</span>
+                   </div>
+                   <div>
+                     <strong className="text-slate-300 print:text-black">FiFTO Scanner</strong>
+                     <span className="ml-2 text-emerald-400 print:text-emerald-600">https://fifto-scanner.onrender.com/</span>
+                   </div>
+                   <div>
+                     <strong className="text-slate-300 print:text-black">Trading Strategy App</strong>
+                     <span className="ml-2 text-emerald-400 print:text-emerald-600">https://fifto.netlify.app/</span>
+                   </div>
+                   <div>
+                     <strong className="text-slate-300 print:text-black">Live TV Anywhere</strong>
+                     <span className="ml-2 text-emerald-400 print:text-emerald-600">https://live-view-anywhere.lovable.app</span>
+                   </div>
+                   <div>
+                     <strong className="text-slate-300 print:text-black">Anjaneya Borewells</strong>
+                     <span className="ml-2 text-emerald-400 print:text-emerald-600">https://anjaneyaborewells.com/</span>
+                   </div>
+                   <div>
+                     <strong className="text-slate-300 print:text-black">Eyas Drapist E-commerce</strong>
+                     <span className="ml-2 text-emerald-400 print:text-emerald-600">https://eyasdrapist.shop/</span>
+                   </div>
                  </div>
                </section>
 
