@@ -695,10 +695,7 @@ const App = () => {
             <div className="absolute -right-24 top-0 h-full w-72 bg-cyan-400/10 blur-3xl sm:-right-16 sm:w-[28rem]"></div>
             <div className="absolute left-0 top-1/3 h-40 w-40 rounded-full bg-emerald-500/5 blur-3xl sm:h-56 sm:w-56"></div>
 
-            <div className="relative z-10 mb-8">
-              <div className="inline-flex items-center justify-center p-3 bg-emerald-500/10 rounded-2xl mb-3 backdrop-blur-sm">
-                <Activity size={28} className="text-emerald-400" />
-              </div>
+            <div className="relative z-10 mb-6">
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">Let's Build Something Great</h2>
               <p className="text-slate-400 mb-8 max-w-xl mx-auto text-base">
                 Whether you need a custom algorithmic trading system, an operational automation tool, or a high-performance web dashboard, I'm ready to collaborate.
@@ -707,27 +704,21 @@ const App = () => {
             
             <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
               <a href="mailto:manirajankg@gmail.com" className="group flex flex-col items-center justify-center p-5 bg-slate-800/50 hover:bg-emerald-500/10 border border-slate-700 hover:border-emerald-500/50 rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-emerald-500/20 backdrop-blur-sm">
-                <div className="p-2.5 bg-slate-800 group-hover:bg-emerald-500/20 rounded-full transition-colors mb-2">
-                  <Mail size={22} className="text-slate-300 group-hover:text-emerald-400" />
-                </div>
                 <span className="font-medium text-base text-slate-300 group-hover:text-emerald-300 mb-1">Email Me</span>
                 <span className="text-xs text-slate-500 group-hover:text-emerald-500">manirajankg@gmail.com</span>
               </a>
               
               <a href="tel:+919159036301" className="group flex flex-col items-center justify-center p-5 bg-slate-800/50 hover:bg-emerald-500/10 border border-slate-700 hover:border-emerald-500/50 rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-emerald-500/20 backdrop-blur-sm">
-                <div className="p-2.5 bg-slate-800 group-hover:bg-emerald-500/20 rounded-full transition-colors mb-2">
-                  <Phone size={22} className="text-slate-300 group-hover:text-emerald-400" />
-                </div>
                 <span className="font-medium text-base text-slate-300 group-hover:text-emerald-300 mb-1">Call Me</span>
                 <span className="text-xs text-slate-500 group-hover:text-emerald-500">+91-91590 36301</span>
               </a>
             </div>
 
             <div className="relative z-10 flex justify-center gap-5 pt-6 border-t border-slate-800/50">
-              <a href="https://github.com/maniraja5599" target="_blank" rel="noreferrer" className="p-2.5 bg-slate-800/50 rounded-full text-slate-400 hover:text-white hover:bg-slate-700 hover:shadow-lg hover:shadow-white/10 transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm">
+              <a href="https://github.com/maniraja5599" target="_blank" rel="noreferrer" className="p-2.5 bg-slate-800/50 rounded-full text-[#f0f0f0] hover:text-[#f0f0f0] hover:bg-[#24292e] hover:shadow-lg hover:shadow-[#24292e]/20 transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm">
                 <Github size={22} />
               </a>
-              <a href="https://in.linkedin.com/in/maniraja5599" target="_blank" rel="noreferrer" className="p-2.5 bg-slate-800/50 rounded-full text-slate-400 hover:text-[#0A66C2] hover:bg-slate-700 hover:shadow-lg hover:shadow-[#0A66C2]/20 transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm">
+              <a href="https://in.linkedin.com/in/maniraja5599" target="_blank" rel="noreferrer" className="p-2.5 bg-slate-800/50 rounded-full text-[#0077b5] hover:text-[#0077b5] hover:bg-[#0077b5]/10 hover:shadow-lg hover:shadow-[#0077b5]/20 transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm">
                 <Linkedin size={22} />
               </a>
             </div>
