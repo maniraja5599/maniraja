@@ -689,9 +689,14 @@ const App = () => {
 
         {/* CONTACT SECTION */}
         <section id="contact" className="py-12 border-t border-slate-800/50 pb-24">
-          <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border border-slate-800 rounded-2xl p-6 md:p-8 text-center max-w-3xl mx-auto shadow-2xl shadow-emerald-900/10">
-            <div className="mb-6">
-              <div className="inline-flex items-center justify-center p-3 bg-emerald-500/10 rounded-2xl mb-3">
+          <div className="relative isolate overflow-hidden rounded-[1.75rem] border border-cyan-950/40 bg-slate-950/70 px-5 py-14 sm:rounded-[2rem] sm:px-8 sm:py-16 md:px-14 md:py-20 max-w-4xl mx-auto shadow-2xl shadow-emerald-900/10">
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,6,23,0.98)_0%,rgba(2,6,23,0.96)_40%,rgba(3,19,31,0.92)_72%,rgba(4,32,43,0.88)_100%)]"></div>
+            <div className="absolute inset-y-0 right-0 w-full bg-[radial-gradient(circle_at_78%_28%,rgba(34,211,238,0.14),transparent_0%,transparent_48%)] sm:w-2/3"></div>
+            <div className="absolute -right-24 top-0 h-full w-72 bg-cyan-400/10 blur-3xl sm:-right-16 sm:w-[28rem]"></div>
+            <div className="absolute left-0 top-1/3 h-40 w-40 rounded-full bg-emerald-500/5 blur-3xl sm:h-56 sm:w-56"></div>
+
+            <div className="relative z-10 mb-8">
+              <div className="inline-flex items-center justify-center p-3 bg-emerald-500/10 rounded-2xl mb-3 backdrop-blur-sm">
                 <Activity size={28} className="text-emerald-400" />
               </div>
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">Let's Build Something Great</h2>
@@ -700,8 +705,8 @@ const App = () => {
               </p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
-              <a href="mailto:manirajankg@gmail.com" className="group flex flex-col items-center justify-center p-5 bg-slate-800/50 hover:bg-emerald-500/10 border border-slate-700 hover:border-emerald-500/50 rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-emerald-500/20">
+            <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
+              <a href="mailto:manirajankg@gmail.com" className="group flex flex-col items-center justify-center p-5 bg-slate-800/50 hover:bg-emerald-500/10 border border-slate-700 hover:border-emerald-500/50 rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-emerald-500/20 backdrop-blur-sm">
                 <div className="p-2.5 bg-slate-800 group-hover:bg-emerald-500/20 rounded-full transition-colors mb-2">
                   <Mail size={22} className="text-slate-300 group-hover:text-emerald-400" />
                 </div>
@@ -709,7 +714,7 @@ const App = () => {
                 <span className="text-xs text-slate-500 group-hover:text-emerald-500">manirajankg@gmail.com</span>
               </a>
               
-              <a href="tel:+919159036301" className="group flex flex-col items-center justify-center p-5 bg-slate-800/50 hover:bg-emerald-500/10 border border-slate-700 hover:border-emerald-500/50 rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-emerald-500/20">
+              <a href="tel:+919159036301" className="group flex flex-col items-center justify-center p-5 bg-slate-800/50 hover:bg-emerald-500/10 border border-slate-700 hover:border-emerald-500/50 rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-emerald-500/20 backdrop-blur-sm">
                 <div className="p-2.5 bg-slate-800 group-hover:bg-emerald-500/20 rounded-full transition-colors mb-2">
                   <Phone size={22} className="text-slate-300 group-hover:text-emerald-400" />
                 </div>
@@ -718,11 +723,11 @@ const App = () => {
               </a>
             </div>
 
-            <div className="flex justify-center gap-5 pt-6 border-t border-slate-800">
-              <a href="https://github.com/maniraja5599" target="_blank" rel="noreferrer" className="p-2.5 bg-slate-800 rounded-full text-slate-400 hover:text-white hover:bg-slate-700 hover:shadow-lg hover:shadow-white/10 transition-all duration-300 hover:-translate-y-1">
+            <div className="relative z-10 flex justify-center gap-5 pt-6 border-t border-slate-800/50">
+              <a href="https://github.com/maniraja5599" target="_blank" rel="noreferrer" className="p-2.5 bg-slate-800/50 rounded-full text-slate-400 hover:text-white hover:bg-slate-700 hover:shadow-lg hover:shadow-white/10 transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm">
                 <Github size={22} />
               </a>
-              <a href="https://in.linkedin.com/in/maniraja5599" target="_blank" rel="noreferrer" className="p-2.5 bg-slate-800 rounded-full text-slate-400 hover:text-[#0A66C2] hover:bg-slate-700 hover:shadow-lg hover:shadow-[#0A66C2]/20 transition-all duration-300 hover:-translate-y-1">
+              <a href="https://in.linkedin.com/in/maniraja5599" target="_blank" rel="noreferrer" className="p-2.5 bg-slate-800/50 rounded-full text-slate-400 hover:text-[#0A66C2] hover:bg-slate-700 hover:shadow-lg hover:shadow-[#0A66C2]/20 transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm">
                 <Linkedin size={22} />
               </a>
             </div>
