@@ -20,6 +20,94 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.chart-drift {
+  animation: chart-drift 18s ease-in-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+  will-change: transform, opacity;
+}
+
+.chart-fill {
+  animation: chart-glow 14s ease-in-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+.chart-line {
+  will-change: transform, opacity;
+}
+
+.chart-line-soft {
+  animation: chart-pulse 16s ease-in-out infinite;
+}
+
+.chart-line-main {
+  animation: chart-pulse 12s ease-in-out infinite;
+}
+
+.candle-motion {
+  animation: candle-float 7.5s ease-in-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+  will-change: transform, opacity;
+}
+
+@keyframes candle-float {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.72;
+  }
+
+  50% {
+    transform: translateY(-14px);
+    opacity: 1;
+  }
+}
+
+@keyframes chart-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(0, -6px, 0) scale(1.01);
+  }
+}
+
+@keyframes chart-pulse {
+  0%,
+  100% {
+    opacity: 0.72;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes chart-glow {
+  0%,
+  100% {
+    opacity: 0.8;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chart-drift,
+  .chart-fill,
+  .chart-line-soft,
+  .chart-line-main,
+  .candle-motion {
+    animation: none;
+  }
+}
+
 @media print {
   body {
     background: white;

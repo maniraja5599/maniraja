@@ -4,6 +4,12 @@ import {
   ChevronRight, ExternalLink, Mail, Phone, Github, Linkedin, 
   MapPin, Code, LineChart, Briefcase, Cpu, FileText, Download, X
 } from 'lucide-react';
+import fiftoDashboardImg from './assets/projects/fifto-dashboard.png';
+import fiftoScannerImg from './assets/projects/fifto-scanner.png';
+import tradingStrategyImg from './assets/projects/trading-strategy-app.png';
+import liveTvAnywhereImg from './assets/projects/live-tv-anywhere.png';
+import anjaneyaBorewellsImg from './assets/projects/anjaneya-borewells.png';
+import eyasDrapistImg from './assets/projects/eyas-drapist-ecommerce.png';
 
 const App = () => {
   const [activeSection, setActiveSection] = useState('home');
@@ -47,6 +53,126 @@ const App = () => {
     { name: 'Projects', id: 'projects' },
     { name: 'Skills', id: 'skills' },
     { name: 'Experience', id: 'experience' },
+  ];
+
+  const featuredProjects = [
+    {
+      title: 'FiFTO Trading Dashboard',
+      description: 'Comprehensive equity trading dashboard with real-time tracking, closed trade review, and portfolio analytics.',
+      href: 'https://fifto-eq-trade.lovable.app/',
+      image: fiftoDashboardImg,
+      icon: BarChart2,
+      accent: 'emerald',
+      tag: 'Trading Dashboard',
+    },
+    {
+      title: 'FiFTO Scanner',
+      description: 'Zone breakout detection engine with momentum analytics, watchlists, and instant Telegram-based reporting.',
+      href: 'https://fifto-scanner.onrender.com/',
+      image: fiftoScannerImg,
+      icon: Activity,
+      accent: 'blue',
+      tag: 'Scanner Engine',
+    },
+    {
+      title: 'Trading Strategy App',
+      description: 'Performance-driven strategy platform focused on wealth management presentation, trust, and live tracking.',
+      href: 'https://fifto.netlify.app/',
+      image: tradingStrategyImg,
+      icon: LineChart,
+      accent: 'purple',
+      tag: 'Strategy Platform',
+    },
+    {
+      title: 'Live TV Anywhere',
+      description: 'Remote-friendly live TV browsing experience with channel navigation, language filters, and display control.',
+      href: 'https://live-view-anywhere.lovable.app',
+      image: liveTvAnywhereImg,
+      icon: Tv,
+      accent: 'rose',
+      tag: 'Media Control',
+    },
+    {
+      title: 'Anjaneya Borewells',
+      description: 'Modern business website for borewell drilling services with service highlights, trust signals, and CTA flow.',
+      href: 'https://anjaneyaborewells.com/',
+      image: anjaneyaBorewellsImg,
+      icon: MapPin,
+      accent: 'cyan',
+      tag: 'Owner Project',
+    },
+    {
+      title: 'Eyas Drapist E-commerce',
+      description: 'Premium draping-service storefront with bold branding, booking-focused CTAs, and elegant dark presentation.',
+      href: 'https://eyasdrapist.shop/',
+      image: eyasDrapistImg,
+      icon: ShoppingBag,
+      accent: 'amber',
+      tag: 'E-commerce',
+    },
+  ];
+
+  const projectAccentClasses = {
+    emerald: {
+      border: 'hover:border-emerald-500/50',
+      shadow: 'hover:shadow-[0_18px_45px_-24px_rgba(16,185,129,0.55)]',
+      text: 'group-hover:text-emerald-400',
+      icon: 'border-emerald-500/20 bg-emerald-500/10 text-emerald-400',
+      badge: 'border-emerald-500/20 bg-emerald-500/10 text-emerald-300',
+    },
+    blue: {
+      border: 'hover:border-blue-500/50',
+      shadow: 'hover:shadow-[0_18px_45px_-24px_rgba(59,130,246,0.55)]',
+      text: 'group-hover:text-blue-400',
+      icon: 'border-blue-500/20 bg-blue-500/10 text-blue-400',
+      badge: 'border-blue-500/20 bg-blue-500/10 text-blue-300',
+    },
+    purple: {
+      border: 'hover:border-purple-500/50',
+      shadow: 'hover:shadow-[0_18px_45px_-24px_rgba(168,85,247,0.55)]',
+      text: 'group-hover:text-purple-400',
+      icon: 'border-purple-500/20 bg-purple-500/10 text-purple-400',
+      badge: 'border-purple-500/20 bg-purple-500/10 text-purple-300',
+    },
+    rose: {
+      border: 'hover:border-rose-500/50',
+      shadow: 'hover:shadow-[0_18px_45px_-24px_rgba(244,63,94,0.55)]',
+      text: 'group-hover:text-rose-400',
+      icon: 'border-rose-500/20 bg-rose-500/10 text-rose-400',
+      badge: 'border-rose-500/20 bg-rose-500/10 text-rose-300',
+    },
+    cyan: {
+      border: 'hover:border-cyan-500/50',
+      shadow: 'hover:shadow-[0_18px_45px_-24px_rgba(6,182,212,0.55)]',
+      text: 'group-hover:text-cyan-400',
+      icon: 'border-cyan-500/20 bg-cyan-500/10 text-cyan-400',
+      badge: 'border-cyan-500/20 bg-cyan-500/10 text-cyan-300',
+    },
+    amber: {
+      border: 'hover:border-amber-500/50',
+      shadow: 'hover:shadow-[0_18px_45px_-24px_rgba(245,158,11,0.55)]',
+      text: 'group-hover:text-amber-400',
+      icon: 'border-amber-500/20 bg-amber-500/10 text-amber-400',
+      badge: 'border-amber-500/20 bg-amber-500/10 text-amber-300',
+    },
+  };
+
+  const supportingProjects = [
+    {
+      title: 'Borewell Mgmt System',
+      description: 'Built pre-AI with Google Sheets + AppSheet for field billing, operations tracking, and workflow management.',
+      href: 'https://icewireless.co.in/',
+      icon: Database,
+      accent: 'indigo',
+      badge: 'Legacy System',
+    },
+    {
+      title: 'Daily Trading Automation',
+      description: 'Local tools for token generation, math-based entry calculations, and real-time Telegram alert bots.',
+      icon: Cpu,
+      accent: 'emerald',
+      badge: 'Local Execution',
+    },
   ];
 
   return (
@@ -139,44 +265,177 @@ const App = () => {
       <main className="max-w-6xl mx-auto px-6 pt-24 print:hidden">
         
         {/* HERO SECTION */}
-        <section id="home" className="min-h-[85vh] flex flex-col justify-center items-start pt-10 pb-20">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-950/50 border border-emerald-500/20 text-emerald-400 text-sm mb-6 animate-pulse">
-            <Activity size={14} />
-            <span>Available for new opportunities</span>
-          </div>
-          <h1 className="text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-4">
-            Mani Raja
-          </h1>
-          <h2 className="text-2xl md:text-4xl font-bold mb-6 text-slate-400">
-            Trading System Developer <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-500">
-              Python | UI/UX | Automation
-            </span>
-          </h2>
-          <p className="text-lg md:text-xl max-w-2xl text-slate-400 mb-10 border-l-4 border-emerald-500 pl-4">
-            "Building intelligent trading systems & real-time applications"
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <button 
-              onClick={() => scrollTo('projects')}
-              className="px-8 py-3 rounded-lg bg-emerald-500 text-slate-950 font-bold hover:bg-emerald-400 transition-all flex items-center gap-2 group"
+        <section
+          id="home"
+          className="relative isolate min-h-[85vh] overflow-hidden rounded-[1.75rem] border border-cyan-950/40 bg-slate-950/70 px-5 py-14 sm:rounded-[2rem] sm:px-8 sm:py-16 md:px-14 md:py-20"
+        >
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,6,23,0.98)_0%,rgba(2,6,23,0.96)_40%,rgba(3,19,31,0.92)_72%,rgba(4,32,43,0.88)_100%)]"></div>
+          <div className="absolute inset-y-0 right-0 w-full bg-[radial-gradient(circle_at_78%_28%,rgba(34,211,238,0.14),transparent_0%,transparent_48%)] sm:w-2/3"></div>
+          <div className="absolute -right-24 top-0 h-full w-72 bg-cyan-400/10 blur-3xl sm:-right-16 sm:w-[28rem]"></div>
+          <div className="absolute left-0 top-1/3 h-40 w-40 rounded-full bg-emerald-500/5 blur-3xl sm:h-56 sm:w-56"></div>
+
+          <svg
+            viewBox="0 0 900 520"
+            aria-hidden="true"
+            className="chart-drift absolute bottom-[-2rem] right-[-12rem] h-[56%] w-[210%] min-w-[520px] opacity-35 sm:bottom-[-4rem] sm:right-[-10rem] sm:h-[68%] sm:w-[160%] sm:opacity-45 md:right-[-8%] md:top-1/2 md:bottom-auto md:h-[120%] md:w-[72%] md:min-w-[620px] md:-translate-y-1/2 md:opacity-60"
+          >
+            <path
+              d="M0 335 C130 250 250 180 390 195 C515 208 630 288 760 300 C815 305 860 304 900 298 L900 520 L0 520 Z"
+              fill="rgba(56,189,248,0.08)"
+              className="chart-fill"
+            />
+            <path
+              d="M-20 290 C95 270 175 314 258 350 C326 379 403 378 470 330 C560 264 628 194 718 187 C801 181 857 205 935 130"
+              fill="none"
+              stroke="rgba(34,211,238,0.14)"
+              strokeWidth="18"
+              strokeLinecap="round"
+              className="chart-line chart-line-soft"
+              pathLength="1200"
+              strokeDasharray="1200"
+            />
+            <path
+              d="M-20 290 C95 270 175 314 258 350 C326 379 403 378 470 330 C560 264 628 194 718 187 C801 181 857 205 935 130"
+              fill="none"
+              stroke="rgba(125,211,252,0.32)"
+              strokeWidth="6"
+              strokeLinecap="round"
+              className="chart-line chart-line-main"
+              pathLength="1200"
+              strokeDasharray="1200"
+              strokeDashoffset="1200"
             >
-              View Projects
-              <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
-            </button>
-            <button 
-              onClick={() => scrollTo('contact')}
-              className="px-8 py-3 rounded-lg bg-transparent border-2 border-slate-700 text-white font-bold hover:border-emerald-500/50 hover:bg-slate-900 transition-all"
-            >
-              Contact Me
-            </button>
-            <button 
-              onClick={() => setShowResume(true)}
-              className="px-8 py-3 rounded-lg bg-transparent border-2 border-emerald-500/30 text-emerald-400 font-bold hover:bg-emerald-500/10 transition-all flex items-center gap-2"
-            >
-              <FileText size={18} />
-              Resume
-            </button>
+              <animate attributeName="stroke-dashoffset" values="1200;0;0" keyTimes="0;0.72;1" dur="14s" begin="0s" repeatCount="indefinite" />
+              <animate attributeName="opacity" values="0.35;1;0.8;0.35" dur="14s" begin="0s" repeatCount="indefinite" />
+            </path>
+
+            <g fill="rgba(45,212,191,0.22)" stroke="rgba(45,212,191,0.32)" strokeWidth="8" strokeLinecap="round">
+              <g opacity="0.75">
+                <animateTransform attributeName="transform" type="translate" values="0 0; 0 -14; 0 3; 0 0" dur="7s" begin="0s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.72;1;0.72" dur="7s" begin="0s" repeatCount="indefinite" />
+                <line x1="255" y1="430" x2="255" y2="320">
+                  <animate attributeName="y1" values="430;422;430" dur="7s" begin="0s" repeatCount="indefinite" />
+                  <animate attributeName="y2" values="320;312;320" dur="7s" begin="0s" repeatCount="indefinite" />
+                </line>
+                <rect x="238" y="355" width="34" height="60" rx="12">
+                  <animate attributeName="y" values="355;344;362;355" dur="7s" begin="0s" repeatCount="indefinite" />
+                  <animate attributeName="height" values="60;78;48;60" dur="7s" begin="0s" repeatCount="indefinite" />
+                </rect>
+              </g>
+              <g opacity="0.75">
+                <animateTransform attributeName="transform" type="translate" values="0 0; 0 -16; 0 3; 0 0" dur="7.4s" begin="1.2s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.72;1;0.72" dur="7.4s" begin="1.2s" repeatCount="indefinite" />
+                <line x1="345" y1="360" x2="345" y2="250">
+                  <animate attributeName="y1" values="360;352;360" dur="7.4s" begin="1.2s" repeatCount="indefinite" />
+                  <animate attributeName="y2" values="250;240;250" dur="7.4s" begin="1.2s" repeatCount="indefinite" />
+                </line>
+                <rect x="328" y="300" width="34" height="90" rx="12">
+                  <animate attributeName="y" values="300;286;306;294;300" dur="7.4s" begin="1.2s" repeatCount="indefinite" />
+                  <animate attributeName="height" values="90;112;76;96;90" dur="7.4s" begin="1.2s" repeatCount="indefinite" />
+                </rect>
+              </g>
+              <g opacity="0.75">
+                <animateTransform attributeName="transform" type="translate" values="0 0; 0 -12; 0 4; 0 0" dur="6.8s" begin="2.4s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.72;1;0.72" dur="6.8s" begin="2.4s" repeatCount="indefinite" />
+                <line x1="430" y1="385" x2="430" y2="290">
+                  <animate attributeName="y1" values="385;378;385" dur="6.8s" begin="2.4s" repeatCount="indefinite" />
+                  <animate attributeName="y2" values="290;282;290" dur="6.8s" begin="2.4s" repeatCount="indefinite" />
+                </line>
+                <rect x="413" y="338" width="34" height="55" rx="12">
+                  <animate attributeName="y" values="338;330;344;336;338" dur="6.8s" begin="2.4s" repeatCount="indefinite" />
+                  <animate attributeName="height" values="55;68;46;58;55" dur="6.8s" begin="2.4s" repeatCount="indefinite" />
+                </rect>
+              </g>
+              <g opacity="0.75">
+                <animateTransform attributeName="transform" type="translate" values="0 0; 0 -15; 0 2; 0 0" dur="7.8s" begin="3.2s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.72;1;0.72" dur="7.8s" begin="3.2s" repeatCount="indefinite" />
+                <line x1="590" y1="332" x2="590" y2="220">
+                  <animate attributeName="y1" values="332;324;332" dur="7.8s" begin="3.2s" repeatCount="indefinite" />
+                  <animate attributeName="y2" values="220;210;220" dur="7.8s" begin="3.2s" repeatCount="indefinite" />
+                </line>
+                <rect x="573" y="275" width="34" height="82" rx="12">
+                  <animate attributeName="y" values="275;260;284;270;275" dur="7.8s" begin="3.2s" repeatCount="indefinite" />
+                  <animate attributeName="height" values="82;104;66;88;82" dur="7.8s" begin="3.2s" repeatCount="indefinite" />
+                </rect>
+              </g>
+              <g opacity="0.75">
+                <animateTransform attributeName="transform" type="translate" values="0 0; 0 -13; 0 5; 0 0" dur="7.2s" begin="4.1s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.72;1;0.72" dur="7.2s" begin="4.1s" repeatCount="indefinite" />
+                <line x1="700" y1="320" x2="700" y2="210">
+                  <animate attributeName="y1" values="320;313;320" dur="7.2s" begin="4.1s" repeatCount="indefinite" />
+                  <animate attributeName="y2" values="210;201;210" dur="7.2s" begin="4.1s" repeatCount="indefinite" />
+                </line>
+                <rect x="683" y="248" width="34" height="76" rx="12">
+                  <animate attributeName="y" values="248;236;255;244;248" dur="7.2s" begin="4.1s" repeatCount="indefinite" />
+                  <animate attributeName="height" values="76;95;62;82;76" dur="7.2s" begin="4.1s" repeatCount="indefinite" />
+                </rect>
+              </g>
+            </g>
+
+            <g fill="rgba(129,140,248,0.18)" stroke="rgba(167,139,250,0.28)" strokeWidth="8" strokeLinecap="round">
+              <g opacity="0.75">
+                <animateTransform attributeName="transform" type="translate" values="0 0; 0 -15; 0 4; 0 0" dur="7.1s" begin="1.8s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.72;1;0.72" dur="7.1s" begin="1.8s" repeatCount="indefinite" />
+                <line x1="515" y1="334" x2="515" y2="205">
+                  <animate attributeName="y1" values="334;326;334" dur="7.1s" begin="1.8s" repeatCount="indefinite" />
+                  <animate attributeName="y2" values="205;195;205" dur="7.1s" begin="1.8s" repeatCount="indefinite" />
+                </line>
+                <rect x="498" y="262" width="34" height="84" rx="12">
+                  <animate attributeName="y" values="262;248;272;256;262" dur="7.1s" begin="1.8s" repeatCount="indefinite" />
+                  <animate attributeName="height" values="84;106;70;90;84" dur="7.1s" begin="1.8s" repeatCount="indefinite" />
+                </rect>
+              </g>
+            </g>
+          </svg>
+
+          <div className="relative z-10 flex min-h-[calc(85vh-7rem)] items-start sm:min-h-[calc(85vh-8rem)] sm:items-center md:min-h-[calc(85vh-10rem)]">
+            <div className="max-w-3xl space-y-8">
+              <div className="inline-flex items-center space-x-2 rounded-full border border-emerald-500/20 bg-emerald-950/30 px-3 py-1 text-xs font-medium text-emerald-400 animate-pulse">
+                <Activity size={12} />
+                <span>Available for new opportunities</span>
+              </div>
+
+              <div className="space-y-4">
+                <h1 className="text-4xl sm:text-5xl md:text-8xl font-black text-white tracking-tighter leading-none">
+                  Mani Raja
+                </h1>
+                <div className="space-y-2">
+                  <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-400">
+                    Trading System Developer
+                  </h2>
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-cyan-300 to-sky-400">
+                    Python | UI/UX | Automation
+                  </h3>
+                </div>
+              </div>
+
+              <p className="max-w-xl border-l-2 border-emerald-500/80 pl-4 py-2 text-base italic font-medium leading-relaxed text-slate-300 sm:pl-6 sm:text-lg md:text-xl">
+                "Building intelligent trading systems & real-time applications"
+              </p>
+
+              <div className="flex flex-col gap-3 pt-4 sm:flex-row sm:flex-wrap sm:gap-4">
+                <button 
+                  onClick={() => scrollTo('projects')}
+                  className="justify-center px-6 py-3.5 rounded-xl bg-emerald-500 text-slate-950 font-bold hover:bg-emerald-400 transition-all shadow-[0_0_24px_-6px_rgba(16,185,129,0.55)] flex items-center gap-2 group sm:px-8 sm:py-4"
+                >
+                  View Projects
+                  <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                </button>
+                <button 
+                  onClick={() => scrollTo('contact')}
+                  className="justify-center px-6 py-3.5 rounded-xl bg-slate-900/75 border border-slate-700 text-white font-bold hover:border-slate-500 transition-all sm:px-8 sm:py-4"
+                >
+                  Contact Me
+                </button>
+                <button 
+                  onClick={() => setShowResume(true)}
+                  className="justify-center px-6 py-3.5 rounded-xl bg-emerald-950/20 border border-emerald-500/20 text-emerald-400 font-bold hover:bg-emerald-500/10 transition-all flex items-center gap-2 sm:px-8 sm:py-4"
+                >
+                  <FileText size={18} />
+                  Resume
+                </button>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -186,7 +445,7 @@ const App = () => {
             <div className="p-3 bg-slate-900 rounded-lg text-emerald-400"><Terminal size={24} /></div>
             <h2 className="text-3xl font-bold text-white">About Me</h2>
           </div>
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="max-w-3xl">
             <div className="space-y-6 text-slate-300 leading-relaxed text-lg">
               <p>
                 My journey into system development is deeply rooted in practical problem-solving. For over 5 years, I managed operations for my Borewell business utilizing Google Sheets.
@@ -198,26 +457,6 @@ const App = () => {
               <p>
                 This hands-on experience forged my strong real-world problem-solving and system design skills. Today, I channel that same innovative spirit into building <strong className="text-white">advanced trading systems, automation tools, and modern web dashboards.</strong>
               </p>
-            </div>
-            <div className="relative">
-              <div className="aspect-square rounded-2xl bg-gradient-to-tr from-slate-900 to-slate-800 border border-slate-700 flex flex-col justify-center items-center p-8 relative overflow-hidden group">
-                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
-                <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
-                <div className="relative z-10 flex flex-col gap-6 w-full">
-                   <div className="flex justify-between items-center bg-slate-950 p-4 rounded-lg border border-slate-800">
-                     <span className="text-slate-400 font-mono text-sm">Real-World Problem Solving</span>
-                     <Activity className="text-emerald-400" size={20} />
-                   </div>
-                   <div className="flex justify-between items-center bg-slate-950 p-4 rounded-lg border border-slate-800">
-                     <span className="text-slate-400 font-mono text-sm">System Architecture</span>
-                     <Database className="text-blue-400" size={20} />
-                   </div>
-                   <div className="flex justify-between items-center bg-slate-950 p-4 rounded-lg border border-slate-800">
-                     <span className="text-slate-400 font-mono text-sm">Algorithmic Trading Logic</span>
-                     <LineChart className="text-cyan-400" size={20} />
-                   </div>
-                </div>
-              </div>
             </div>
           </div>
         </section>
@@ -232,121 +471,93 @@ const App = () => {
             <p className="text-slate-400 max-w-2xl">Hover over the cards to interact. A collection of trading systems, business solutions, and automation scripts.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <a href="https://fifto-eq-trade.lovable.app/" target="_blank" rel="noreferrer" 
-               className="group relative h-64 bg-slate-900 rounded-xl overflow-hidden border border-slate-800 hover:border-emerald-500/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_30px_-15px_rgba(16,185,129,0.3)]">
-              <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 to-slate-950 p-6 flex flex-col justify-between z-10">
-                <div className="flex justify-between items-start">
-                  <div className="p-2 bg-emerald-500/10 text-emerald-400 rounded-lg"><BarChart2 size={24} /></div>
-                  <ExternalLink size={20} className="text-slate-500 group-hover:text-emerald-400 transition-colors" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors">FiFTO Trading Dashboard</h3>
-                  <p className="text-slate-400 text-sm">Comprehensive equity trading dashboard with real-time tracking.</p>
-                </div>
-              </div>
-            </a>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {featuredProjects.map((project) => {
+              const Icon = project.icon;
+              const accent = projectAccentClasses[project.accent];
 
-            <a href="https://fifto-scanner.onrender.com/" target="_blank" rel="noreferrer" 
-               className="group relative h-64 bg-slate-900 rounded-xl overflow-hidden border border-slate-800 hover:border-blue-500/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_30px_-15px_rgba(59,130,246,0.3)]">
-              <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 to-slate-950 p-6 flex flex-col justify-between z-10">
-                <div className="flex justify-between items-start">
-                  <div className="p-2 bg-blue-500/10 text-blue-400 rounded-lg"><Activity size={24} /></div>
-                  <ExternalLink size={20} className="text-slate-500 group-hover:text-blue-400 transition-colors" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">FiFTO Scanner</h3>
-                  <p className="text-slate-400 text-sm">Zone Breakout detection engine integrated with instant Telegram Alerts.</p>
-                </div>
-              </div>
-            </a>
-
-            <a href="https://fifto.netlify.app/" target="_blank" rel="noreferrer" 
-               className="group relative h-64 bg-slate-900 rounded-xl overflow-hidden border border-slate-800 hover:border-purple-500/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_30px_-15px_rgba(168,85,247,0.3)]">
-              <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 to-slate-950 p-6 flex flex-col justify-between z-10">
-                <div className="flex justify-between items-start">
-                  <div className="p-2 bg-purple-500/10 text-purple-400 rounded-lg"><LineChart size={24} /></div>
-                  <ExternalLink size={20} className="text-slate-500 group-hover:text-purple-400 transition-colors" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors">Trading Strategy App</h3>
-                  <p className="text-slate-400 text-sm">Web application for backtesting and formulating trading strategies.</p>
-                </div>
-              </div>
-            </a>
-
-            <a href="https://live-view-anywhere.lovable.app" target="_blank" rel="noreferrer" 
-               className="group relative h-64 bg-slate-900 rounded-xl overflow-hidden border border-slate-800 hover:border-rose-500/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_30px_-15px_rgba(244,63,94,0.3)]">
-              <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 to-slate-950 p-6 flex flex-col justify-between z-10">
-                <div className="flex justify-between items-start">
-                  <div className="p-2 bg-rose-500/10 text-rose-400 rounded-lg"><Tv size={24} /></div>
-                  <ExternalLink size={20} className="text-slate-500 group-hover:text-rose-400 transition-colors" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-rose-400 transition-colors">Live TV Anywhere</h3>
-                  <p className="text-slate-400 text-sm">Innovative QR-based Remote Control System for display management.</p>
-                </div>
-              </div>
-            </a>
-
-            <a href="https://anjaneyaborewells.com/" target="_blank" rel="noreferrer" 
-               className="group relative h-64 bg-slate-900 rounded-xl overflow-hidden border border-slate-800 hover:border-cyan-500/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_30px_-15px_rgba(6,182,212,0.3)]">
-              <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 to-slate-950 p-6 flex flex-col justify-between z-10">
-                <div className="flex justify-between items-start">
-                  <div className="p-2 bg-cyan-500/10 text-cyan-400 rounded-lg"><MapPin size={24} /></div>
-                  <ExternalLink size={20} className="text-slate-500 group-hover:text-cyan-400 transition-colors" />
-                </div>
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <h3 className="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">Anjaneya Borewells</h3>
-                    <span className="text-[10px] uppercase bg-cyan-900/50 text-cyan-400 px-2 py-1 rounded">Owner Project</span>
+              return (
+                <a
+                  key={project.title}
+                  href={project.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={`group overflow-hidden rounded-2xl border border-slate-800 bg-slate-900 transition-all duration-300 hover:-translate-y-2 ${accent.border} ${accent.shadow}`}
+                >
+                  <div className="relative aspect-[16/10] overflow-hidden border-b border-slate-800">
+                    <img
+                      src={project.image}
+                      alt={`${project.title} screenshot`}
+                      loading="lazy"
+                      className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.035]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/35 to-slate-950/5"></div>
+                    <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-slate-950 to-transparent"></div>
+                    <div className="absolute left-4 top-4 flex items-center gap-2">
+                      <div className={`rounded-xl border p-2.5 backdrop-blur-sm ${accent.icon}`}>
+                        <Icon size={18} />
+                      </div>
+                      <span className={`rounded-full border px-3 py-1 text-[11px] uppercase tracking-[0.22em] backdrop-blur-sm ${accent.badge}`}>
+                        {project.tag}
+                      </span>
+                    </div>
+                    <div className="absolute right-4 top-4 rounded-full border border-white/10 bg-slate-950/70 p-2 text-slate-300 backdrop-blur-sm transition-colors group-hover:border-white/20">
+                      <ExternalLink size={16} />
+                    </div>
                   </div>
-                  <p className="text-slate-400 text-sm">Official website for my Borewell drilling business in Namakkal.</p>
-                </div>
-              </div>
-            </a>
 
-            <a href="https://eyasdrapist.shop/" target="_blank" rel="noreferrer" 
-               className="group relative h-64 bg-slate-900 rounded-xl overflow-hidden border border-slate-800 hover:border-amber-500/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_30px_-15px_rgba(245,158,11,0.3)]">
-              <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 to-slate-950 p-6 flex flex-col justify-between z-10">
-                <div className="flex justify-between items-start">
-                  <div className="p-2 bg-amber-500/10 text-amber-400 rounded-lg"><ShoppingBag size={24} /></div>
-                  <ExternalLink size={20} className="text-slate-500 group-hover:text-amber-400 transition-colors" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-amber-400 transition-colors">Eyas Drapist E-commerce</h3>
-                  <p className="text-slate-400 text-sm">Full-fledged e-commerce storefront for retail operations.</p>
-                </div>
-              </div>
-            </a>
+                  <div className="space-y-3 p-5">
+                    <div className="flex items-start justify-between gap-3">
+                      <h3 className={`text-xl font-bold text-white transition-colors ${accent.text}`}>
+                        {project.title}
+                      </h3>
+                    </div>
+                    <p className="text-sm leading-relaxed text-slate-400">
+                      {project.description}
+                    </p>
+                    <div className="flex items-center gap-2 pt-1 text-sm font-medium text-slate-300">
+                      <span>View Project</span>
+                      <ChevronRight size={16} className="transition-transform group-hover:translate-x-1" />
+                    </div>
+                  </div>
+                </a>
+              );
+            })}
+          </div>
 
-             <a href="https://icewireless.co.in/" target="_blank" rel="noreferrer" 
-               className="group relative h-64 bg-slate-900 rounded-xl overflow-hidden border border-slate-800 hover:border-indigo-500/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_30px_-15px_rgba(99,102,241,0.3)]">
-              <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 to-slate-950 p-6 flex flex-col justify-between z-10">
-                <div className="flex justify-between items-start">
-                  <div className="p-2 bg-indigo-500/10 text-indigo-400 rounded-lg"><Database size={24} /></div>
-                  <ExternalLink size={20} className="text-slate-500 group-hover:text-indigo-400 transition-colors" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-indigo-400 transition-colors">Borewell Mgmt System</h3>
-                  <p className="text-slate-400 text-sm">Built 5 years ago (pre-AI) using Google Sheets + AppSheet for instant billing and operations.</p>
-                </div>
-              </div>
-            </a>
+          <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2">
+            {supportingProjects.map((project) => {
+              const Icon = project.icon;
+              const accentStyles = project.accent === 'indigo'
+                ? 'border-indigo-500/30 bg-indigo-500/10 text-indigo-400'
+                : 'border-emerald-500/30 bg-emerald-500/10 text-emerald-400';
+              const hoverStyles = project.accent === 'indigo'
+                ? 'hover:border-indigo-500/50 hover:shadow-[0_18px_45px_-24px_rgba(99,102,241,0.55)]'
+                : 'hover:border-emerald-500/50 hover:shadow-[0_18px_45px_-24px_rgba(16,185,129,0.55)]';
 
-            <div className="group relative h-64 bg-gradient-to-br from-slate-900 to-emerald-950/20 rounded-xl overflow-hidden border border-emerald-500/30 transition-all duration-300 hover:-translate-y-2">
-              <div className="absolute inset-0 p-6 flex flex-col justify-between z-10">
-                <div className="flex justify-between items-start">
-                  <div className="p-2 bg-emerald-500/20 text-emerald-400 rounded-lg animate-pulse"><Cpu size={24} /></div>
-                  <span className="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded border border-emerald-500/30">Local Execution</span>
+              const cardContent = (
+                <div className={`group rounded-2xl border border-slate-800 bg-slate-900/60 p-6 transition-all duration-300 hover:-translate-y-2 ${hoverStyles}`}>
+                  <div className="mb-5 flex items-start justify-between gap-3">
+                    <div className={`rounded-xl border p-3 ${accentStyles}`}>
+                      <Icon size={22} />
+                    </div>
+                    <span className={`rounded-full border px-3 py-1 text-[11px] uppercase tracking-[0.22em] ${accentStyles}`}>
+                      {project.badge}
+                    </span>
+                  </div>
+                  <h3 className="mb-2 text-xl font-bold text-white">{project.title}</h3>
+                  <p className="text-sm leading-relaxed text-slate-400">{project.description}</p>
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white mb-2">Daily Trading Automation</h3>
-                  <p className="text-slate-400 text-sm">Running locally: Token generator automation, math-based entry calculations, and real-time Telegram alert bots.</p>
-                </div>
-              </div>
-            </div>
-            
+              );
+
+              return project.href ? (
+                <a key={project.title} href={project.href} target="_blank" rel="noreferrer">
+                  {cardContent}
+                </a>
+              ) : (
+                <div key={project.title}>{cardContent}</div>
+              );
+            })}
           </div>
         </section>
 
