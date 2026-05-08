@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Terminal, BarChart2, Activity, Tv, ShoppingBag, Database, 
   ChevronRight, ExternalLink, Mail, Phone, Github, Linkedin, 
-  MapPin, Code, LineChart, Briefcase, Cpu, FileText, Download, X
+  MapPin, Code, LineChart, Briefcase, Cpu, FileText, Download, X, GraduationCap
 } from 'lucide-react';
+import html2pdf from 'html2pdf.js';
 import fiftoDashboardImg from './assets/projects/fifto-dashboard.png';
 import fiftoScannerImg from './assets/projects/fifto-scanner.png';
 import tradingStrategyImg from './assets/projects/trading-strategy-app.png';
@@ -11,16 +12,62 @@ import liveTvAnywhereImg from './assets/projects/live-tv-anywhere.png';
 import anjaneyaBorewellsImg from './assets/projects/anjaneya-borewells.png';
 import eyasDrapistImg from './assets/projects/eyas-drapist-ecommerce.png';
 
+const languageColors = {
+  TypeScript: 'bg-blue-500',
+  JavaScript: 'bg-yellow-500',
+  HTML: 'bg-orange-600',
+  Python: 'bg-green-500',
+  CSS: 'bg-blue-600',
+  PowerShell: 'bg-purple-500',
+  Shell: 'bg-gray-600',
+  Batchfile: 'bg-gray-500',
+  PLpgSQL: 'bg-blue-400',
+  Java: 'bg-red-600',
+  Dockerfile: 'bg-blue-700',
+  VBScript: 'bg-yellow-600',
+  Hack: 'bg-cyan-500',
+};
+
+const maxBytes = 1345103; // TypeScript value
+
+const LanguageBar = ({ language, bytes, colorClass, maxValue }) => {
+  const percentage = (bytes / maxValue) * 100;
+  return (
+    <div className="mb-4">
+      <div className="flex justify-between items-center mb-1.5">
+        <span className="text-sm font-medium text-slate-300">{language}</span>
+        <span className="text-xs text-slate-500 font-mono">{formatBytes(bytes)}</span>
+      </div>
+      <div className="h-2.5 bg-slate-800 rounded-full overflow-hidden">
+        <div 
+          className={`h-full rounded-full transition-all duration-1000 ease-out ${colorClass}`}
+          style={{ width: `${percentage}%` }}
+        />
+      </div>
+    </div>
+  );
+};
+
+const formatBytes = (bytes) => {
+  if (bytes >= 1024 * 1024) {
+    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  } else if (bytes >= 1024) {
+    return `${(bytes / 1024).toFixed(1)} KB`;
+  }
+  return `${bytes} B`;
+};
+
 const App = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [isScrolled, setIsScrolled] = useState(false);
   const [showResume, setShowResume] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
       
-      const sections = ['home', 'about', 'projects', 'skills', 'experience', 'contact'];
+        const sections = ['home', 'about', 'projects', 'skills', 'experience', 'education', 'contact'];
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
@@ -37,80 +84,99 @@ const App = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollTo = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      window.scrollTo({
-        top: element.offsetTop - 80,
-        behavior: 'smooth'
-      });
-    }
-  };
+  const downloadPDF = () => {
+    const resumeContent = document.getElementById('resume-content');
+    if (!resumeContent) return;
 
-  const navLinks = [
+    const options = {
+      margin: 10,
+      filename: 'ManiRaja_Resume.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    html2pdf()
+      .set(options)
+      .from(resumeContent)
+       .save();
+   };
+
+   const scrollTo = (id) => {
+     const element = document.getElementById(id);
+     if (element) {
+       window.scrollTo({
+         top: element.offsetTop - 80,
+         behavior: 'smooth'
+       });
+     }
+   };
+
+   const navLinks = [
     { name: 'Home', id: 'home' },
     { name: 'About', id: 'about' },
     { name: 'Projects', id: 'projects' },
     { name: 'Skills', id: 'skills' },
     { name: 'Experience', id: 'experience' },
+    { name: 'Education', id: 'education' },
   ];
 
-  const featuredProjects = [
-    {
-      title: 'FiFTO Trading Dashboard',
-      description: 'Comprehensive equity trading dashboard with real-time tracking, closed trade review, and portfolio analytics.',
-      href: 'https://fifto-eq-trade.lovable.app/',
-      image: fiftoDashboardImg,
-      icon: BarChart2,
-      accent: 'emerald',
-      tag: 'Trading Dashboard',
-    },
-    {
-      title: 'FiFTO Scanner',
-      description: 'Zone breakout detection engine with momentum analytics, watchlists, and instant Telegram-based reporting.',
-      href: 'https://fifto-scanner.onrender.com/',
-      image: fiftoScannerImg,
-      icon: Activity,
-      accent: 'blue',
-      tag: 'Scanner Engine',
-    },
-    {
-      title: 'Trading Strategy App',
-      description: 'Performance-driven strategy platform focused on wealth management presentation, trust, and live tracking.',
-      href: 'https://fifto.netlify.app/',
-      image: tradingStrategyImg,
-      icon: LineChart,
-      accent: 'purple',
-      tag: 'Strategy Platform',
-    },
-    {
-      title: 'Live TV Anywhere',
-      description: 'Remote-friendly live TV browsing experience with channel navigation, language filters, and display control.',
-      href: 'https://live-view-anywhere.lovable.app',
-      image: liveTvAnywhereImg,
-      icon: Tv,
-      accent: 'rose',
-      tag: 'Media Control',
-    },
-    {
-      title: 'Anjaneya Borewells',
-      description: 'Modern business website for borewell drilling services with service highlights, trust signals, and CTA flow.',
-      href: 'https://anjaneyaborewells.com/',
-      image: anjaneyaBorewellsImg,
-      icon: MapPin,
-      accent: 'cyan',
-      tag: 'Owner Project',
-    },
-    {
-      title: 'Eyas Drapist E-commerce',
-      description: 'Premium draping-service storefront with bold branding, booking-focused CTAs, and elegant dark presentation.',
-      href: 'https://eyasdrapist.shop/',
-      image: eyasDrapistImg,
-      icon: ShoppingBag,
-      accent: 'amber',
-      tag: 'E-commerce',
-    },
-  ];
+   const featuredProjects = [
+     {
+       title: 'FiFTO Trading Dashboard',
+       description: 'Real-time equity tracking platform with portfolio analytics, closed trade review, multi-timeframe charts, WebSocket live updates, and performance metrics. Built for systematic traders.',
+       href: 'https://fifto-eq-trade.lovable.app/',
+       image: fiftoDashboardImg,
+       icon: BarChart2,
+       accent: 'emerald',
+       tag: 'Live Dashboard',
+     },
+     {
+       title: 'FiFTO Scanner',
+       description: 'Intelligent zone breakout detection engine with momentum analytics, customizable watchlists, instant Telegram alerts, and automated reporting for options traders.',
+       href: 'https://fifto-scanner.onrender.com/',
+       image: fiftoScannerImg,
+       icon: Activity,
+       accent: 'blue',
+       tag: 'Scanner Engine',
+     },
+     {
+       title: 'Trading Strategy App',
+       description: 'Performance-driven strategy platform focused on wealth management presentation, trust-building features, live trade tracking, and educational resources for traders.',
+       href: 'https://fifto.netlify.app/',
+       image: tradingStrategyImg,
+       icon: LineChart,
+       accent: 'purple',
+       tag: 'Strategy Platform',
+     },
+     {
+       title: 'Live TV Anywhere',
+       description: 'Remote-friendly live TV browsing experience with intelligent channel navigation, language/category filters, display controls, and responsive design for any device.',
+       href: 'https://live-view-anywhere.lovable.app',
+       image: liveTvAnywhereImg,
+       icon: Tv,
+       accent: 'rose',
+       tag: 'Media Control',
+     },
+     {
+       title: 'Anjaneya Borewells',
+       description: 'Modern business website for borewell drilling services featuring service highlights, customer testimonials, trust signals, gallery, and optimized CTA flow for lead generation.',
+       href: 'https://anjaneyaborewells.com/',
+       image: anjaneyaBorewellsImg,
+       icon: MapPin,
+       accent: 'cyan',
+       tag: 'Business Site',
+     },
+     {
+       title: 'Eyas Drapist E-commerce',
+       description: 'Premium draping-service storefront with bold minimalist branding, booking-focused CTAs, elegant dark theme, and seamless service customization experience.',
+       href: 'https://eyasdrapist.shop/',
+       image: eyasDrapistImg,
+       icon: ShoppingBag,
+       accent: 'amber',
+       tag: 'E-Commerce',
+     },
+   ];
 
   const projectAccentClasses = {
     emerald: {
@@ -241,20 +307,71 @@ const App = () => {
           <div className="font-bold text-xl tracking-tighter text-white">
             Mani<span className="text-emerald-400">Raja.</span>
           </div>
+          
+          {/* Desktop Menu */}
           <div className="hidden md:flex space-x-8">
             {navLinks.map((link) => (
               <button
                 key={link.id}
-                onClick={() => scrollTo(link.id)}
+                onClick={() => {
+                  scrollTo(link.id);
+                  setIsMobileMenuOpen(false);
+                }}
                 className={`text-sm font-medium transition-colors hover:text-emerald-400 ${activeSection === link.id ? 'text-emerald-400' : 'text-slate-400'}`}
               >
                 {link.name}
               </button>
             ))}
           </div>
+          
+          {/* Mobile Menu Toggle */}
+          <button 
+            className="md:hidden p-2 text-slate-300 hover:text-emerald-400 transition-colors"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {isMobileMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
+          
+          {/* Mobile Menu Dropdown */}
+          {isMobileMenuOpen && (
+            <div className="absolute top-full left-0 w-full bg-slate-900 border-b border-slate-800 md:hidden shadow-xl">
+              <div className="flex flex-col space-y-2 p-4">
+                {navLinks.map((link) => (
+                  <button
+                    key={link.id}
+                    onClick={() => {
+                      scrollTo(link.id);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className={`text-left px-4 py-3 rounded-lg transition-colors hover:bg-slate-800 ${activeSection === link.id ? 'text-emerald-400' : 'text-slate-300'}`}
+                  >
+                    {link.name}
+                  </button>
+                ))}
+                <button
+                  onClick={() => {
+                    scrollTo('contact');
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="mt-2 px-4 py-3 rounded-lg bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 transition-colors text-left"
+                >
+                  Contact
+                </button>
+              </div>
+            </div>
+          )}
+          
+          {/* Desktop Contact Button */}
           <button 
             onClick={() => scrollTo('contact')}
-            className="px-5 py-2 text-sm font-semibold rounded-full bg-slate-800 text-white hover:bg-slate-700 transition-colors border border-slate-700"
+            className="hidden md:block px-5 py-2 text-sm font-semibold rounded-full bg-slate-800 text-white hover:bg-slate-700 transition-colors border border-slate-700"
           >
             Contact
           </button>
@@ -388,32 +505,75 @@ const App = () => {
             </g>
           </svg>
 
-          <div className="relative z-10 flex min-h-[calc(85vh-7rem)] items-start sm:min-h-[calc(85vh-8rem)] sm:items-center md:min-h-[calc(85vh-10rem)]">
+          <div className="relative z-10 flex min-h-[calc(85vh-7rem)] flex-col items-start gap-10 sm:min-h-[calc(85vh-8rem)] sm:items-center md:min-h-[calc(85vh-10rem)] lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-3xl space-y-8">
               <div className="inline-flex items-center space-x-2 rounded-full border border-emerald-500/20 bg-emerald-950/30 px-3 py-1 text-xs font-medium text-emerald-400 animate-pulse">
                 <Activity size={12} />
                 <span>Available for new opportunities</span>
               </div>
 
-              <div className="space-y-4">
-                <h1 className="text-4xl sm:text-5xl md:text-8xl font-black text-white tracking-tighter leading-none">
-                  Mani Raja
-                </h1>
-                <div className="space-y-2">
-                  <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-400">
-                    Trading System Developer
-                  </h2>
-                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-cyan-300 to-sky-400">
-                    Python | UI/UX | Automation
-                  </h3>
-                </div>
-              </div>
+               <div className="space-y-4">
+                 <div className="relative inline-block">
+                   <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-emerald-400/30 via-cyan-400/30 to-blue-400/30 blur-xl"></div>
+                   <h1 className="relative text-4xl sm:text-5xl md:text-8xl font-black text-white tracking-tighter leading-none bg-gradient-to-r from-emerald-300 via-cyan-200 to-blue-300 bg-clip-text text-transparent drop-shadow-lg">
+                     MANI RAJA NACHIMUTHU
+                   </h1>
+                 </div>
+                 <div className="space-y-2">
+                   <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-400">
+                     Trading System Developer
+                   </h2>
+                   <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-cyan-300 to-sky-400">
+                     Python | UI/UX | Automation Specialist
+                   </h3>
+                 </div>
+               </div>
 
-              <p className="max-w-xl border-l-2 border-emerald-500/80 pl-4 py-2 text-base italic font-medium leading-relaxed text-slate-300 sm:pl-6 sm:text-lg md:text-xl">
-                "Building intelligent trading systems & real-time applications"
-              </p>
+               <p className="max-w-xl border-l-2 border-emerald-500/80 pl-4 py-2 text-base italic font-medium leading-relaxed text-slate-300 sm:pl-6 sm:text-lg md:text-xl">
+                 "Building intelligent trading systems & real-time applications"
+               </p>
 
-              <div className="flex flex-col gap-3 pt-4 sm:flex-row sm:flex-wrap sm:gap-4">
+               {/* Additional Details */}
+               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4">
+                 <div className="flex items-start gap-3 p-3 rounded-lg bg-slate-900/50 border border-slate-800/50">
+                   <div className="p-2 bg-emerald-500/10 rounded-lg text-emerald-400 mt-0.5">
+                     <BarChart2 size={18} />
+                   </div>
+                   <div>
+                     <h4 className="text-sm font-bold text-white mb-1">Real-Time Trading</h4>
+                     <p className="text-xs text-slate-400">Live dashboards & automated systems</p>
+                   </div>
+                 </div>
+                 <div className="flex items-start gap-3 p-3 rounded-lg bg-slate-900/50 border border-slate-800/50">
+                   <div className="p-2 bg-blue-500/10 rounded-lg text-blue-400 mt-0.5">
+                     <Activity size={18} />
+                   </div>
+                   <div>
+                     <h4 className="text-sm font-bold text-white mb-1">Smart Automation</h4>
+                     <p className="text-xs text-slate-400">Math-based entry & alert systems</p>
+                   </div>
+                 </div>
+                 <div className="flex items-start gap-3 p-3 rounded-lg bg-slate-900/50 border border-slate-800/50">
+                   <div className="p-2 bg-cyan-500/10 rounded-lg text-cyan-400 mt-0.5">
+                     <Database size={18} />
+                   </div>
+                   <div>
+                     <h4 className="text-sm font-bold text-white mb-1">API Integrations</h4>
+                     <p className="text-xs text-slate-400">Seamless platform connections</p>
+                   </div>
+                 </div>
+                 <div className="flex items-start gap-3 p-3 rounded-lg bg-slate-900/50 border border-slate-800/50">
+                   <div className="p-2 bg-purple-500/10 rounded-lg text-purple-400 mt-0.5">
+                     <LineChart size={18} />
+                   </div>
+                   <div>
+                     <h4 className="text-sm font-bold text-white mb-1">Portfolio Analytics</h4>
+                     <p className="text-xs text-slate-400">Performance tracking & insights</p>
+                   </div>
+                 </div>
+               </div>
+
+               <div className="flex flex-col gap-3 pt-4 sm:flex-row sm:flex-wrap sm:gap-4">
                 <button 
                   onClick={() => scrollTo('projects')}
                   className="justify-center px-6 py-3.5 rounded-xl bg-emerald-500 text-slate-950 font-bold hover:bg-emerald-400 transition-all shadow-[0_0_24px_-6px_rgba(16,185,129,0.55)] flex items-center gap-2 group sm:px-8 sm:py-4"
@@ -436,6 +596,23 @@ const App = () => {
                 </button>
               </div>
             </div>
+
+            <div className="w-full max-w-sm shrink-0">
+              <div className="relative overflow-hidden rounded-[2rem] border border-slate-800/60 bg-slate-950/80 shadow-[0_30px_80px_-38px_rgba(14,165,233,0.45)]">
+                <img
+                  src="/profile.png"
+                  alt="Mani Raja"
+                  className="aspect-[4/5] w-full object-cover"
+                  onError={(event) => {
+                    event.currentTarget.onerror = null;
+                    event.currentTarget.src = '/profile-placeholder.svg';
+                  }}
+                />
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/95 via-slate-950/60 to-transparent px-5 py-4">
+                  <p className="text-sm text-slate-300">Hi, I’m Mani Raja — Trading System Developer.</p>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -445,18 +622,52 @@ const App = () => {
             <div className="p-3 bg-slate-900 rounded-lg text-emerald-400"><Terminal size={24} /></div>
             <h2 className="text-3xl font-bold text-white">About Me</h2>
           </div>
-          <div className="max-w-3xl">
+          <div className="max-w-4xl">
             <div className="space-y-6 text-slate-300 leading-relaxed text-lg">
               <p>
-                My journey into system development is deeply rooted in practical problem-solving. For over 5 years, I managed operations for my Borewell business utilizing Google Sheets.
+                My journey into system development is deeply rooted in practical problem-solving. For over 5 years, I managed operations for my Borewell business utilizing Google Sheets, where I independently architected a comprehensive <strong className="text-emerald-400">Borewell Management System</strong> before modern AI tools became mainstream.
               </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+                <div className="p-5 bg-gradient-to-br from-emerald-900/30 to-transparent border border-emerald-500/20 rounded-xl">
+                  <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                    <Code className="text-emerald-400" size={20} />
+                    Core Expertise
+                  </h3>
+                  <ul className="space-y-2 text-sm text-slate-300">
+                    <li>• <strong className="text-white">Python Development:</strong> Trading algorithms, automation scripts, API integrations</li>
+                    <li>• <strong className="text-white">Real-Time Systems:</strong> WebSocket connections, live dashboards, alert bots</li>
+                    <li>• <strong className="text-white">UI/UX Design:</strong> Intuitive interfaces, responsive layouts, user-centric design</li>
+                    <li>• <strong className="text-white">Trading Logic:</strong> Options strategies, VWAP, momentum, math-based entries</li>
+                  </ul>
+                </div>
+
+                <div className="p-5 bg-gradient-to-br from-blue-900/30 to-transparent border border-blue-500/20 rounded-xl">
+                  <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                    <LineChart className="text-blue-400" size={20} />
+                    Key Achievements
+                  </h3>
+                  <ul className="space-y-2 text-sm text-slate-300">
+                    <li>• Built <strong className="text-white">FiFTO Trading Dashboard</strong> - Comprehensive equity tracking platform</li>
+                    <li>• Developed <strong className="text-white">FiFTO Scanner</strong> - Zone breakout detection engine</li>
+                    <li>• Created <strong className="text-white">Telegram Bot Network</strong> - Real-time trade alerts & automation</li>
+                    <li>• Architected <strong className="text-white">Borewell Management System</strong> - Full-stack business solution</li>
+                  </ul>
+                </div>
+              </div>
+
               <p className="p-4 bg-slate-900/50 border border-slate-800 rounded-xl relative overflow-hidden">
-                <span className="absolute top-0 left-0 w-1 h-full bg-emerald-500"></span>
-                Before AI tools became popular, I independently designed and built a <strong className="text-emerald-400">Borewell Management System</strong> using Google Sheets and AppSheet. This original idea allowed me to manage complex operations and generate instant billing directly from the field.
+                <span className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-emerald-500 to-cyan-500"></span>
+                This hands-on experience forged my strong <strong className="text-emerald-400">real-world problem-solving</strong> and <strong className="text-cyan-400">system design</strong> skills. Today, I channel that same innovative spirit into building <strong className="text-white">advanced trading systems, automation tools, and modern web dashboards</strong> that bridge finance and technology.
               </p>
-              <p>
-                This hands-on experience forged my strong real-world problem-solving and system design skills. Today, I channel that same innovative spirit into building <strong className="text-white">advanced trading systems, automation tools, and modern web dashboards.</strong>
-              </p>
+
+              <div className="flex flex-wrap gap-3 pt-4">
+                {['Algorithmic Trading', 'System Architecture', 'Real-Time Data', 'API Integration', 'Dashboard Design', 'TradingView Pinescript', 'WebSocket Development', 'Telegram Bots', 'React/Next.js', 'Python Automation'].map((skill, idx) => (
+                  <span key={idx} className="px-3 py-1.5 bg-slate-800/70 text-slate-300 rounded-md text-xs border border-slate-700 hover:border-emerald-500/50 transition-all">
+                    {skill}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -608,6 +819,106 @@ const App = () => {
               </div>
             </div>
           </div>
+
+          {/* GitHub Coding Activity Chart */}
+          <div className="mt-12 bg-slate-900/50 border border-slate-800 rounded-2xl p-6 sm:p-8">
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center gap-4">
+                <div className="p-3 bg-slate-800 rounded-lg text-emerald-400">
+                  <Github size={24} />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-white">GitHub Coding Activity</h3>
+                  <p className="text-sm text-slate-400">Real-time language distribution from public repositories</p>
+                </div>
+              </div>
+              <a 
+                href="https://github.com/maniraja5599" 
+                target="_blank" 
+                rel="noreferrer"
+                className="text-sm text-emerald-400 hover:text-emerald-300 flex items-center gap-1"
+              >
+                View Profile <ExternalLink size={14} />
+              </a>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <h4 className="text-lg font-bold text-white">Languages by Code Volume</h4>
+                  <span className="text-xs text-slate-500 font-mono">Total: 30 repos</span>
+                </div>
+                <div className="space-y-3">
+                  {Object.entries({
+                    TypeScript: 1345103,
+                    JavaScript: 285783,
+                    HTML: 145829,
+                    Python: 94026,
+                    CSS: 85699,
+                    PowerShell: 27612,
+                    Shell: 11219,
+                    Batchfile: 7514,
+                    PLpgSQL: 2995,
+                    Java: 1298,
+                    Dockerfile: 1162,
+                    VBScript: 483,
+                    Hack: 64
+                  })
+                    .sort(([,a], [,b]) => b - a)
+                    .map(([lang, bytes]) => (
+                      <LanguageBar 
+                        key={lang}
+                        language={lang}
+                        bytes={bytes}
+                        colorClass={languageColors[lang] || 'bg-gray-500'}
+                        maxValue={1345103}
+                      />
+                    ))
+                  }
+                </div>
+              </div>
+              
+              <div>
+                <h4 className="text-lg font-bold text-white mb-4">GitHub Stats</h4>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
+                    <div className="text-3xl font-black text-white mb-1">30</div>
+                    <div className="text-sm text-slate-400">Public Repositories</div>
+                  </div>
+                  <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
+                    <div className="text-3xl font-black text-white mb-1">0</div>
+                    <div className="text-sm text-slate-400">Followers</div>
+                  </div>
+                  <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
+                    <div className="text-3xl font-black text-emerald-400 mb-1">2016</div>
+                    <div className="text-sm text-slate-400">Joined GitHub</div>
+                  </div>
+                  <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
+                    <div className="text-3xl font-black text-blue-400 mb-1">TypeScript</div>
+                    <div className="text-sm text-slate-400">Primary Language</div>
+                  </div>
+                </div>
+
+                <div className="mt-6 p-4 bg-slate-800/50 border border-slate-700 rounded-xl">
+                  <h5 className="text-sm font-bold text-white mb-3">Recent Activity</h5>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-xs text-slate-400">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                      <span>Updated <strong className="text-slate-300">maniraja</strong> portfolio (May 2026)</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-slate-400">
+                      <span className="w-2 h-2 rounded-full bg-blue-500"></span>
+                      <span>Pushed to <strong className="text-slate-300">FiFTO-WOP-NIFTY-TS</strong> (Apr 2026)</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-slate-400">
+                      <span className="w-2 h-2 rounded-full bg-cyan-500"></span>
+                      <span>Pushed to <strong className="text-slate-300">FiFTO-Legends-NIFTY</strong> (Apr 2026)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* EXPERIENCE SECTION */}
@@ -687,6 +998,25 @@ const App = () => {
           </div>
         </section>
 
+        {/* EDUCATION SECTION */}
+        <section id="education" className="py-20 border-t border-slate-800/50">
+          <div className="flex items-center gap-4 mb-12">
+            <div className="p-3 bg-slate-900 rounded-lg text-emerald-400"><GraduationCap size={24} /></div>
+            <h2 className="text-3xl font-bold text-white">Education</h2>
+          </div>
+
+          <div className="relative border-l-2 border-slate-800 ml-4 md:ml-6 space-y-12">
+            <div className="relative pl-8 md:pl-12">
+              <div className="absolute -left-[11px] top-1 h-5 w-5 rounded-full bg-slate-950 border-4 border-emerald-500"></div>
+              <div className="flex flex-col md:flex-row md:items-center justify-between mb-2">
+                <h3 className="text-xl font-bold text-white">B.Tech Information Technology</h3>
+                <span className="text-emerald-400 font-mono text-sm">2010 – 2014</span>
+              </div>
+              <h4 className="text-lg text-slate-400">Adhiyamaan College Of Engineering</h4>
+            </div>
+          </div>
+        </section>
+
         {/* CONTACT SECTION */}
         <section id="contact" className="py-12 border-t border-slate-800/50 pb-24">
           <div className="relative isolate overflow-hidden rounded-[1.75rem] border border-cyan-950/40 bg-slate-950/70 px-5 py-14 sm:rounded-[2rem] sm:px-8 sm:py-16 md:px-14 md:py-20 max-w-4xl mx-auto shadow-2xl shadow-emerald-900/10">
@@ -695,31 +1025,44 @@ const App = () => {
             <div className="absolute -right-24 top-0 h-full w-72 bg-cyan-400/10 blur-3xl sm:-right-16 sm:w-[28rem]"></div>
             <div className="absolute left-0 top-1/3 h-40 w-40 rounded-full bg-emerald-500/5 blur-3xl sm:h-56 sm:w-56"></div>
 
-            <div className="relative z-10 mb-6">
+            <div className="relative z-10 mb-8">
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">Let's Build Something Great</h2>
               <p className="text-slate-400 mb-8 max-w-xl mx-auto text-base">
-                Whether you need a custom algorithmic trading system, an operational automation tool, or a high-performance web dashboard, I'm ready to collaborate.
+                I'm always excited to collaborate on innovative trading systems, automation solutions, or web applications. Whether you need a custom algorithmic trading bot, a real-time dashboard, or a full-stack web platform, let's discuss how we can work together.
               </p>
             </div>
-            
-            <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
-              <a href="mailto:manirajankg@gmail.com" className="group flex flex-col items-center justify-center p-5 bg-slate-800/50 hover:bg-emerald-500/10 border border-slate-700 hover:border-emerald-500/50 rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-emerald-500/20 backdrop-blur-sm">
-                <span className="font-medium text-base text-slate-300 group-hover:text-emerald-300 mb-1">Email Me</span>
-                <span className="text-xs text-slate-500 group-hover:text-emerald-500">manirajankg@gmail.com</span>
+
+            <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+              <a href="mailto:manirajankg@gmail.com" className="group flex flex-col items-center justify-center p-6 bg-slate-800/50 hover:bg-emerald-500/10 border border-slate-700 hover:border-emerald-500/50 rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-emerald-500/20 backdrop-blur-sm">
+                <Mail className="mb-3 text-emerald-400 group-hover:text-emerald-300" size={28} />
+                <span className="font-semibold text-base text-slate-300 group-hover:text-emerald-300 mb-1">Email Me</span>
+                <span className="text-xs text-slate-500 group-hover:text-emerald-500 text-center">manirajankg@gmail.com</span>
               </a>
-              
-              <a href="tel:+919159036301" className="group flex flex-col items-center justify-center p-5 bg-slate-800/50 hover:bg-emerald-500/10 border border-slate-700 hover:border-emerald-500/50 rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-emerald-500/20 backdrop-blur-sm">
-                <span className="font-medium text-base text-slate-300 group-hover:text-emerald-300 mb-1">Call Me</span>
-                <span className="text-xs text-slate-500 group-hover:text-emerald-500">+91-91590 36301</span>
+
+              <a href="tel:+919159036301" className="group flex flex-col items-center justify-center p-6 bg-slate-800/50 hover:bg-blue-500/10 border border-slate-700 hover:border-blue-500/50 rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/20 backdrop-blur-sm">
+                <Phone className="mb-3 text-blue-400 group-hover:text-blue-300" size={28} />
+                <span className="font-semibold text-base text-slate-300 group-hover:text-blue-300 mb-1">Call Me</span>
+                <span className="text-xs text-slate-500 group-hover:text-blue-500">+91-91590 36301</span>
+              </a>
+
+              <a href="https://github.com/maniraja5599" target="_blank" rel="noreferrer" className="group flex flex-col items-center justify-center p-6 bg-slate-800/50 hover:bg-purple-500/10 border border-slate-700 hover:border-purple-500/50 rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-500/20 backdrop-blur-sm">
+                <Github className="mb-3 text-purple-400 group-hover:text-purple-300" size={28} />
+                <span className="font-semibold text-base text-slate-300 group-hover:text-purple-300 mb-1">GitHub</span>
+                <span className="text-xs text-slate-500 group-hover:text-purple-500">@maniraja5599</span>
               </a>
             </div>
 
             <div className="relative z-10 flex justify-center gap-5 pt-6 border-t border-slate-800/50">
-              <a href="https://github.com/maniraja5599" target="_blank" rel="noreferrer" className="p-2.5 bg-slate-800/50 rounded-full text-[#f0f0f0] hover:text-[#f0f0f0] hover:bg-[#24292e] hover:shadow-lg hover:shadow-[#24292e]/20 transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm">
+              <a href="https://github.com/maniraja5599" target="_blank" rel="noreferrer" className="p-3 bg-slate-800/50 hover:bg-emerald-500/10 rounded-full text-[#f0f0f0] hover:text-emerald-400 border border-slate-700 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/20 transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm" title="GitHub Profile">
                 <Github size={22} />
               </a>
-              <a href="https://in.linkedin.com/in/maniraja5599" target="_blank" rel="noreferrer" className="p-2.5 bg-slate-800/50 rounded-full text-[#0077b5] hover:text-[#0077b5] hover:bg-[#0077b5]/10 hover:shadow-lg hover:shadow-[#0077b5]/20 transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm">
+              <a href="https://in.linkedin.com/in/maniraja5599" target="_blank" rel="noreferrer" className="p-3 bg-slate-800/50 hover:bg-blue-600/10 rounded-full text-[#0077b5] hover:text-blue-400 border border-slate-700 hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/20 transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm" title="LinkedIn Profile">
                 <Linkedin size={22} />
+              </a>
+              <a href="https://t.me/maniraja5599" target="_blank" rel="noreferrer" className="p-3 bg-slate-800/50 hover:bg-cyan-500/10 rounded-full text-cyan-400 hover:text-cyan-300 border border-slate-700 hover:border-cyan-500/50 hover:shadow-lg hover:shadow-cyan-500/20 transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm" title="Telegram">
+                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                </svg>
               </a>
             </div>
           </div>
@@ -729,7 +1072,7 @@ const App = () => {
 
       {/* Footer */}
       <footer className="py-6 border-t border-slate-900 text-center text-slate-500 text-sm print:hidden">
-        <p>© {new Date().getFullYear()} Mani Raja. Trading System Developer & Automation Specialist.</p>
+        <p>© {new Date().getFullYear()} Mani Raja Nachimuthu. Trading System Developer & Automation Specialist.</p>
       </footer>
 
       {/* RESUME MODAL */}
@@ -744,7 +1087,7 @@ const App = () => {
               </h2>
               <div className="flex gap-3">
                 <button 
-                  onClick={() => window.print()}
+                  onClick={downloadPDF}
                   className="px-4 py-2 rounded-lg bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-colors flex items-center gap-2 text-sm font-bold"
                 >
                   <Download size={18} />
@@ -759,129 +1102,222 @@ const App = () => {
               </div>
             </div>
             
-            {/* Resume Content - Printable Area */}
-            <div className="p-6 sm:p-10 overflow-y-auto text-slate-300 space-y-8 bg-slate-950 print:bg-white print:text-black print:overflow-visible print:p-0">
-               
-               {/* Resume Header */}
-               <div className="border-b border-slate-800 pb-6 print:border-gray-300">
-                 <h1 className="text-3xl sm:text-4xl font-extrabold text-white print:text-black mb-2">MANI RAJA</h1>
-                 <p className="text-emerald-400 print:text-gray-800 font-bold text-lg mb-4">Trading System Developer | Python | UI/UX | Automation</p>
-                 <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm text-slate-400 print:text-gray-600">
-                   <span>📞 +91-91590 36301</span>
-                   <span>✉️ manirajankg@gmail.com</span>
-                   <span>📍 Namakkal, Tamil Nadu, India</span>
-                 </div>
-               </div>
 
-               {/* Summary */}
-               <section>
-                 <h2 className="text-xl font-bold text-white print:text-black border-l-4 border-emerald-500 pl-3 mb-4">PROFESSIONAL SUMMARY</h2>
-                 <p className="leading-relaxed text-slate-400 print:text-gray-700">
-                   Innovative and solutions-driven Trading System Developer with a strong foundation in practical problem-solving and system architecture. Leveraged early technical skills to independently build a comprehensive business management system using Google Sheets and AppSheet before modern AI adoption. Currently specializing in developing advanced algorithmic trading systems, real-time web dashboards, API integrations, and automated operational tools for financial markets.
-                 </p>
-               </section>
-
-               {/* Skills */}
-               <section>
-                 <h2 className="text-xl font-bold text-white print:text-black border-l-4 border-emerald-500 pl-3 mb-4">TECHNICAL SKILLS</h2>
-                 <ul className="space-y-3 text-slate-400 print:text-gray-700 list-disc list-inside">
-                   <li><strong className="text-slate-300 print:text-black">Technical Languages & Tech:</strong> Python, Pine Script, API Integration, HTML, CSS, AppSheet, Google Sheets, WebSocket.</li>
-                   <li><strong className="text-slate-300 print:text-black">Trading Logic & Strategies:</strong> Options Trading, Supply & Demand, VWAP, Momentum, Math-based Entries, Algorithmic Automation.</li>
-                   <li><strong className="text-slate-300 print:text-black">Tools & Platforms:</strong> TradingView, MetaTrader 5, VS Code, GitHub, Telegram Bots, Render, Netlify.</li>
-                 </ul>
-               </section>
-
-               {/* Experience */}
-               <section>
-                 <h2 className="text-xl font-bold text-white print:text-black border-l-4 border-emerald-500 pl-3 mb-4">PROFESSIONAL EXPERIENCE</h2>
-                 
-                 <div className="space-y-6">
-                   <div>
-                     <div className="flex justify-between items-start mb-1">
-                       <h3 className="text-lg font-bold text-slate-200 print:text-black">Independent System Developer <span className="text-emerald-400 print:text-gray-500 text-sm font-normal">| Trading Dashboards & Automation</span></h3>
-                       <span className="text-sm font-mono text-slate-500 print:text-gray-500">Ongoing</span>
+             {/* Resume Content - Printable Area */}
+             <div id="resume-content" className="p-6 sm:p-10 overflow-y-auto text-slate-300 space-y-8 bg-white text-black print:overflow-visible print:p-0">
+                
+                 {/* Resume Header */}
+                 <div className="border-b border-gray-300 pb-6 flex flex-col sm:flex-row items-center sm:items-start gap-6">
+                   <img 
+                     src="/profile.png" 
+                     alt="Mani Raja Nachimuthu" 
+                     className="w-32 h-32 rounded-xl object-cover border-4 border-gray-300 shadow-lg"
+                     onError={(e) => {
+                       e.currentTarget.onerror = null;
+                       e.currentTarget.src = '/profile-placeholder.svg';
+                     }}
+                   />
+                   <div className="text-center sm:text-left flex-1">
+                     <h1 className="text-3xl sm:text-4xl font-extrabold text-black mb-2">MANI RAJA NACHIMUTHU</h1>
+                     <p className="text-emerald-600 font-bold text-lg mb-4">Trading System Developer | Python | UI/UX | Automation Specialist</p>
+                     <div className="flex flex-wrap justify-center sm:justify-start gap-x-4 gap-y-2 text-sm text-gray-600">
+                       <span>📞 +91-91590 36301</span>
+                       <span>✉️ manirajankg@gmail.com</span>
+                       <span>📍 Namakkal, Tamil Nadu, India</span>
                      </div>
-                     <ul className="list-disc list-inside text-slate-400 print:text-gray-700 space-y-1 ml-2 text-sm">
-                       <li>Architect and build highly functional, real-time trading dashboards and robust API integrations across multiple platforms.</li>
-                       <li>Automate daily token generation and execute math-based entry algorithms for precise market positioning.</li>
-                       <li>Develop real-time Telegram alert bots to provide immediate, automated trade signaling and notifications.</li>
-                     </ul>
-                   </div>
-
-                   <div>
-                     <div className="flex justify-between items-start mb-1">
-                       <h3 className="text-lg font-bold text-slate-200 print:text-black">Founder & Lead Educator <span className="text-emerald-400 print:text-gray-500 text-sm font-normal">| FiFTO Trading Community</span></h3>
-                       <span className="text-sm font-mono text-slate-500 print:text-gray-500">Ongoing</span>
-                     </div>
-                     <ul className="list-disc list-inside text-slate-400 print:text-gray-700 space-y-1 ml-2 text-sm">
-                       <li>Lead an educational Portfolio Management Service (PMS) model named "FiFTO".</li>
-                       <li>Provide structured mentorship, real-time market analysis, and educate community members on systematic, mathematics-based trading strategies.</li>
-                     </ul>
-                   </div>
-
-                   <div>
-                     <div className="flex justify-between items-start mb-1">
-                       <h3 className="text-lg font-bold text-slate-200 print:text-black">Owner & Founder <span className="text-emerald-400 print:text-gray-500 text-sm font-normal">| Anjaneya Borewells, Namakkal</span></h3>
-                       <span className="text-sm font-mono text-slate-500 print:text-gray-500">2019 – Present</span>
-                     </div>
-                     <ul className="list-disc list-inside text-slate-400 print:text-gray-700 space-y-1 ml-2 text-sm">
-                       <li>Manage and operate the latest borewell drilling services in Namakkal.</li>
-                       <li>Independently designed and deployed a full-scale Borewell Management System using Google Sheets and AppSheet.</li>
-                     </ul>
-                   </div>
-
-                   <div>
-                     <div className="flex justify-between items-start mb-1">
-                       <h3 className="text-lg font-bold text-slate-200 print:text-black">Borewell Manager <span className="text-emerald-400 print:text-gray-500 text-sm font-normal">| Operations & Management</span></h3>
-                       <span className="text-sm font-mono text-slate-500 print:text-gray-500">2016 – 2018</span>
-                     </div>
-                     <ul className="list-disc list-inside text-slate-400 print:text-gray-700 space-y-1 ml-2 text-sm">
-                       <li>Managed end-to-end field logistics, crew operations, and client relationships for borewell drilling services.</li>
-                     </ul>
-                   </div>
-
-                   <div>
-                     <div className="flex justify-between items-start mb-1">
-                       <h3 className="text-lg font-bold text-slate-200 print:text-black">Networking Engineer <span className="text-emerald-400 print:text-gray-500 text-sm font-normal">| ICE Networking</span></h3>
-                       <span className="text-sm font-mono text-slate-500 print:text-gray-500">2015 – 2016 (6 Months)</span>
-                     </div>
-                     <ul className="list-disc list-inside text-slate-400 print:text-gray-700 space-y-1 ml-2 text-sm">
-                       <li>Built foundational technical skills by configuring real-time systems, designing initial dashboard concepts, and implementing internal automation tools.</li>
-                     </ul>
                    </div>
                  </div>
-               </section>
 
-               {/* Projects */}
-               <section className="print:break-inside-avoid">
-                 <h2 className="text-xl font-bold text-white print:text-black border-l-4 border-emerald-500 pl-3 mb-4">FEATURED PROJECTS</h2>
-                 <div className="space-y-3 text-sm text-slate-400 print:text-gray-700">
-                   <div>
-                     <strong className="text-slate-300 print:text-black">FiFTO Trading Dashboard</strong>
-                     <span className="ml-2 text-emerald-400 print:text-emerald-600">https://fifto-eq-trade.lovable.app/</span>
+                 {/* Summary */}
+                 <section className="bg-gray-50 p-5 rounded-lg border-l-4 border-emerald-500">
+                   <h2 className="text-xl font-bold text-black mb-3">PROFESSIONAL SUMMARY</h2>
+                   <p className="leading-relaxed text-gray-700">
+                     Innovative and solutions-driven <strong className="text-emerald-600">Trading System Developer</strong> with 5+ years of hands-on experience in system architecture, real-time automation, and business operations management. Self-taught pioneer who independently designed and deployed a comprehensive Borewell Management System using Google Sheets and AppSheet before AI adoption, demonstrating exceptional problem-solving and system design capabilities.
+                   </p>
+                   <p className="leading-relaxed text-gray-700 mt-3">
+                     Currently specializing in developing <strong className="text-blue-600">advanced algorithmic trading systems</strong>, real-time web dashboards with WebSocket integrations, API connectors for multiple platforms (TradingView, MetaTrader 5), and automated operational tools. Founder of <strong className="text-purple-600">FiFTO Trading Community</strong>, an educational Portfolio Management Service providing structured mentorship and systematic trading strategies.
+                   </p>
+                 </section>
+
+                 {/* Skills */}
+                 <section>
+                   <h2 className="text-xl font-bold text-black border-l-4 border-emerald-500 pl-3 mb-4">TECHNICAL SKILLS</h2>
+                   
+                   <div className="mb-4">
+                     <h3 className="text-lg font-semibold text-black mb-2">Programming & Scripting</h3>
+                     <div className="flex flex-wrap gap-2">
+                       {['Python (Advanced)', 'Pine Script (TradingView)', 'JavaScript', 'TypeScript', 'HTML5/CSS3', 'SQL', 'Bash/Shell'].map((skill, idx) => (
+                         <span key={idx} className="px-3 py-1.5 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-md text-sm">{skill}</span>
+                       ))}
+                     </div>
                    </div>
-                   <div>
-                     <strong className="text-slate-300 print:text-black">FiFTO Scanner</strong>
-                     <span className="ml-2 text-emerald-400 print:text-emerald-600">https://fifto-scanner.onrender.com/</span>
+
+                   <div className="mb-4">
+                     <h3 className="text-lg font-semibold text-black mb-2">Trading Systems & Strategies</h3>
+                     <div className="flex flex-wrap gap-2">
+                       {['Algorithmic Trading', 'Options Trading', 'VWAP & Momentum', 'Supply & Demand Zones', 'Math-Based Entries', 'Real-Time Alerts', 'Telegram Bot Integration', 'WebSocket APIs'].map((skill, idx) => (
+                         <span key={idx} className="px-3 py-1.5 bg-blue-50 text-blue-800 border border-blue-200 rounded-md text-sm">{skill}</span>
+                       ))}
+                     </div>
                    </div>
-                   <div>
-                     <strong className="text-slate-300 print:text-black">Trading Strategy App</strong>
-                     <span className="ml-2 text-emerald-400 print:text-emerald-600">https://fifto.netlify.app/</span>
+
+                   <div className="mb-4">
+                     <h3 className="text-lg font-semibold text-black mb-2">Tools & Platforms</h3>
+                     <div className="flex flex-wrap gap-2">
+                       {['TradingView', 'MetaTrader 5', 'React/Next.js', 'Git/GitHub', 'VS Code', 'Render', 'Netlify', 'Vercel', 'Google Sheets/AppSheet', 'Postman'].map((skill, idx) => (
+                         <span key={idx} className="px-3 py-1.5 bg-purple-50 text-purple-800 border border-purple-200 rounded-md text-sm">{skill}</span>
+                       ))}
+                     </div>
                    </div>
-                   <div>
-                     <strong className="text-slate-300 print:text-black">Live TV Anywhere</strong>
-                     <span className="ml-2 text-emerald-400 print:text-emerald-600">https://live-view-anywhere.lovable.app</span>
+
+                   <div className="mb-4">
+                     <h3 className="text-lg font-semibold text-black mb-2">Core Competencies</h3>
+                     <div className="flex flex-wrap gap-2">
+                       {['System Architecture', 'API Integration', 'Real-Time Data Processing', 'Dashboard Design', 'Automation', 'Problem-Solving', 'Full-Stack Development', 'UI/UX Design'].map((skill, idx) => (
+                         <span key={idx} className="px-3 py-1.5 bg-amber-50 text-amber-800 border border-amber-200 rounded-md text-sm">{skill}</span>
+                       ))}
+                     </div>
                    </div>
-                   <div>
-                     <strong className="text-slate-300 print:text-black">Anjaneya Borewells</strong>
-                     <span className="ml-2 text-emerald-400 print:text-emerald-600">https://anjaneyaborewells.com/</span>
+                 </section>
+
+                 {/* Experience */}
+                 <section>
+                   <h2 className="text-xl font-bold text-black border-l-4 border-emerald-500 pl-3 mb-4">PROFESSIONAL EXPERIENCE</h2>
+                   
+                   <div className="space-y-6">
+                     <div>
+                       <div className="flex justify-between items-start mb-1">
+                         <h3 className="text-lg font-bold text-black">Independent System Developer <span className="text-emerald-600 text-sm font-normal">| Trading Dashboards & Automation</span></h3>
+                         <span className="text-sm font-mono text-gray-500">2020 – Present</span>
+                       </div>
+                       <ul className="list-disc list-inside text-gray-700 space-y-1 ml-2 text-sm">
+                         <li>Architect and build highly functional, real-time trading dashboards with live data visualization and multi-timeframe analysis.</li>
+                         <li>Engineered robust API integrations connecting TradingView, MetaTrader 5, and custom trading platforms for seamless data flow.</li>
+                         <li>Automate daily token generation, execute math-based entry algorithms, and deploy real-time Telegram alert bots for instant trade signaling.</li>
+                         <li>Developed <strong>FiFTO Trading Dashboard</strong> - comprehensive equity tracking platform with portfolio analytics, closed trade review, and performance metrics.</li>
+                         <li>Created <strong>FiFTO Scanner</strong> - zone breakout detection engine with momentum analytics, watchlists, and automated reporting systems.</li>
+                       </ul>
+                     </div>
+
+                     <div>
+                       <div className="flex justify-between items-start mb-1">
+                         <h3 className="text-lg font-bold text-black">Founder & Lead Educator <span className="text-emerald-600 text-sm font-normal">| FiFTO Trading Community</span></h3>
+                         <span className="text-sm font-mono text-gray-500">2019 – Present</span>
+                       </div>
+                       <ul className="list-disc list-inside text-gray-700 space-y-1 ml-2 text-sm">
+                         <li>Lead an educational Portfolio Management Service (PMS) model named "FiFTO" with 100+ active members.</li>
+                         <li>Provide structured mentorship, real-time market analysis, and educate community members on systematic, mathematics-based trading strategies.</li>
+                        <li>Conduct regular webinars, live trading sessions, and strategy reviews to foster a learning-focused trading environment.</li>
+                       </ul>
+                     </div>
+
+                     <div>
+                       <div className="flex justify-between items-start mb-1">
+                         <h3 className="text-lg font-bold text-black">Owner & Founder <span className="text-emerald-600 text-sm font-normal">| Anjaneya Borewells, Namakkal</span></h3>
+                         <span className="text-sm font-mono text-gray-500">2019 – Present</span>
+                       </div>
+                       <ul className="list-disc list-inside text-gray-700 space-y-1 ml-2 text-sm">
+                         <li>Operate modern borewell drilling services across Namakkal district with a focus on precision and reliability.</li>
+                         <li>Independently designed and deployed a full-scale <strong>Borewell Management System</strong> using Google Sheets + AppSheet with features: real-time billing, operations tracking, client management, inventory control, and automated reports.</li>
+                         <li>System reduced administrative overhead by 60% and enabled complete field-to-office data synchronization.</li>
+                       </ul>
+                     </div>
+
+                     <div>
+                       <div className="flex justify-between items-start mb-1">
+                         <h3 className="text-lg font-bold text-black">Borewell Manager <span className="text-emerald-600 text-sm font-normal">| Operations & Management</span></h3>
+                         <span className="text-sm font-mono text-gray-500">2016 – 2018</span>
+                       </div>
+                       <ul className="list-disc list-inside text-gray-700 space-y-1 ml-2 text-sm">
+                         <li>Managed end-to-end field logistics, crew operations, equipment maintenance, and client relationships for borewell drilling services.</li>
+                         <li>This hands-on experience laid the groundwork for successfully launching my own borewell business and understanding operational workflows.</li>
+                       </ul>
+                     </div>
+
+                     <div>
+                       <div className="flex justify-between items-start mb-1">
+                         <h3 className="text-lg font-bold text-black">Networking Engineer <span className="text-emerald-600 text-sm font-normal">| ICE Networking</span></h3>
+                         <span className="text-sm font-mono text-gray-500">2015 – 2016 (6 Months)</span>
+                       </div>
+                       <ul className="list-disc list-inside text-gray-700 space-y-1 ml-2 text-sm">
+                         <li>Built foundational technical skills by configuring real-time systems, designing initial dashboard concepts, and implementing internal automation tools.</li>
+                         <li>Worked with network infrastructure and data systems, gaining exposure to operational technology that later influenced trading system design.</li>
+                       </ul>
+                     </div>
                    </div>
+                 </section>
+
+                 {/* Education */}
+                 <section>
+                   <h2 className="text-xl font-bold text-black border-l-4 border-emerald-500 pl-3 mb-4">EDUCATION</h2>
                    <div>
-                     <strong className="text-slate-300 print:text-black">Eyas Drapist E-commerce</strong>
-                     <span className="ml-2 text-emerald-400 print:text-emerald-600">https://eyasdrapist.shop/</span>
+                     <div className="flex justify-between items-start mb-1">
+                       <h3 className="text-lg font-bold text-black">B.Tech Information Technology</h3>
+                       <span className="text-sm font-mono text-gray-500">2010 – 2014</span>
+                     </div>
+                     <p className="text-sm text-gray-700">Adhiyamaan College Of Engineering</p>
                    </div>
-                 </div>
-               </section>
+                 </section>
+
+                 {/* Projects */}
+                 <section className="print:break-inside-avoid">
+                   <h2 className="text-xl font-bold text-black border-l-4 border-emerald-500 pl-3 mb-4">FEATURED PROJECTS</h2>
+                   <div className="space-y-4 text-sm">
+                     <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                       <div className="flex justify-between items-start mb-1">
+                         <strong className="text-black text-base">FiFTO Trading Dashboard</strong>
+                         <span className="text-emerald-600 text-xs font-normal uppercase tracking-wide">Live Dashboard</span>
+                       </div>
+                       <p className="text-gray-700 mb-2">Comprehensive equity trading dashboard with real-time portfolio tracking, closed trade review, performance analytics, and multi-timeframe analysis. Features live WebSocket connections for instant market data updates.</p>
+                       <span className="text-emerald-600 text-xs">https://fifto-eq-trade.lovable.app/</span>
+                     </div>
+
+                     <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                       <div className="flex justify-between items-start mb-1">
+                         <strong className="text-black text-base">FiFTO Scanner</strong>
+                         <span className="text-blue-600 text-xs font-normal uppercase tracking-wide">Detection Engine</span>
+                       </div>
+                       <p className="text-gray-700 mb-2">Zone breakout detection engine with momentum analytics, customizable watchlists, and instant Telegram-based reporting. Identifies potential trading opportunities based on supply/demand zones.</p>
+                       <span className="text-blue-600 text-xs">https://fifto-scanner.onrender.com/</span>
+                     </div>
+
+                     <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                       <div className="flex justify-between items-start mb-1">
+                         <strong className="text-black text-base">Trading Strategy App</strong>
+                         <span className="text-purple-600 text-xs font-normal uppercase tracking-wide">Strategy Platform</span>
+                       </div>
+                       <p className="text-gray-700 mb-2">Performance-driven strategy platform focused on wealth management presentation, trust-building features, and live trade tracking for educational purposes.</p>
+                       <span className="text-purple-600 text-xs">https://fifto.netlify.app/</span>
+                     </div>
+
+                     <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                       <div className="flex justify-between items-start mb-1">
+                         <strong className="text-black text-base">Live TV Anywhere</strong>
+                         <span className="text-cyan-600 text-xs font-normal uppercase tracking-wide">Media Control</span>
+                       </div>
+                       <p className="text-gray-700 mb-2">Remote-friendly live TV browsing experience with channel navigation, language filters, and display control capabilities for streaming platforms.</p>
+                       <span className="text-cyan-600 text-xs">https://live-view-anywhere.lovable.app</span>
+                     </div>
+
+                     <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                       <div className="flex justify-between items-start mb-1">
+                         <strong className="text-black text-base">Anjaneya Borewells</strong>
+                         <span className="text-amber-600 text-xs font-normal uppercase tracking-wide">Business Website</span>
+                       </div>
+                       <p className="text-gray-700 mb-2">Modern business website for borewell drilling services featuring service highlights, customer testimonials, trust signals, and optimized conversion-focused call-to-action flows.</p>
+                       <span className="text-amber-600 text-xs">https://anjaneyaborewells.com/</span>
+                     </div>
+
+                     <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                       <div className="flex justify-between items-start mb-1">
+                         <strong className="text-black text-base">Eyas Drapist E-commerce</strong>
+                         <span className="text-rose-600 text-xs font-normal uppercase tracking-wide">E-Commerce</span>
+                       </div>
+                       <p className="text-gray-700 mb-2">Premium draping-service storefront with bold branding, booking-focused CTAs, elegant dark theme presentation, and integrated service customization features.</p>
+                       <span className="text-rose-600 text-xs">https://eyasdrapist.shop/</span>
+                     </div>
+                   </div>
+                 </section>
 
             </div>
           </div>

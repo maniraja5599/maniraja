@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 520" role="img" aria-labelledby="title desc">
+  <title>Profile placeholder</title>
+  <desc>Fallback profile image placeholder for the hero section.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#0f4d95" />
+    </linearGradient>
+  </defs>
+  <rect width="400" height="520" rx="48" fill="url(#bg)" />
+  <circle cx="200" cy="170" r="90" fill="#1e293b" />
+  <path d="M110 400c0-66 44-120 98-120s98 54 98 120" fill="#1e293b" />
+  <circle cx="200" cy="160" r="20" fill="#60a5fa" opacity="0.85" />
+  <path d="M165 200c0-22 18-40 40-40s40 18 40 40v4c0 22-18 40-40 40s-40-18-40-40v-4z" fill="#93c5fd" opacity="0.9" />
+  <rect x="90" y="360" width="220" height="24" rx="12" fill="#38bdf8" opacity="0.4" />
+  <rect x="90" y="400" width="220" height="18" rx="9" fill="#60a5fa" opacity="0.35" />
+  <rect x="90" y="430" width="220" height="18" rx="9" fill="#60a5fa" opacity="0.25" />
+</svg>
