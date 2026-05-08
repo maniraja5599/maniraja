@@ -515,15 +515,15 @@ const App = () => {
                <div className="space-y-4">
                  <div className="relative inline-block">
                    <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-emerald-400/30 via-cyan-400/30 to-blue-400/30 blur-xl"></div>
-                   <h1 className="relative text-4xl sm:text-5xl md:text-8xl font-black text-white tracking-tighter leading-none bg-gradient-to-r from-emerald-300 via-cyan-200 to-blue-300 bg-clip-text text-transparent drop-shadow-lg">
-                     MANI RAJA NACHIMUTHU
+                   <h1 className="relative text-3xl sm:text-4xl md:text-6xl font-black text-white tracking-tighter leading-none bg-gradient-to-r from-emerald-300 via-cyan-200 to-blue-300 bg-clip-text text-transparent drop-shadow-lg">
+                     MANIRAJA NACHIMUTHU
                    </h1>
                  </div>
                  <div className="space-y-2">
-                   <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-400">
+                   <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-slate-400">
                      Trading System Developer
                    </h2>
-                   <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-cyan-300 to-sky-400">
+                   <h3 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-cyan-300 to-sky-400">
                      Python | UI/UX | Automation Specialist
                    </h3>
                  </div>
@@ -1072,7 +1072,7 @@ const App = () => {
 
       {/* Footer */}
       <footer className="py-6 border-t border-slate-900 text-center text-slate-500 text-sm print:hidden">
-        <p>© {new Date().getFullYear()} Mani Raja Nachimuthu. Trading System Developer & Automation Specialist.</p>
+        <p>© {new Date().getFullYear()} Maniraja Nachimuthu. Trading System Developer & Automation Specialist.</p>
       </footer>
 
       {/* RESUME MODAL */}
@@ -1110,17 +1110,17 @@ const App = () => {
                  <div className="border-b border-gray-300 pb-6 flex flex-col sm:flex-row items-center sm:items-start gap-6">
                    <img 
                      src="/profile.png" 
-                     alt="Mani Raja Nachimuthu" 
-                     className="w-32 h-32 rounded-xl object-cover border-4 border-gray-300 shadow-lg"
+                     alt="Maniraja Nachimuthu" 
+                     className="w-24 h-24 sm:w-32 sm:h-32 rounded-xl object-cover border-4 border-gray-300 shadow-lg"
                      onError={(e) => {
                        e.currentTarget.onerror = null;
                        e.currentTarget.src = '/profile-placeholder.svg';
                      }}
                    />
                    <div className="text-center sm:text-left flex-1">
-                     <h1 className="text-3xl sm:text-4xl font-extrabold text-black mb-2">MANI RAJA NACHIMUTHU</h1>
-                     <p className="text-emerald-600 font-bold text-lg mb-4">Trading System Developer | Python | UI/UX | Automation Specialist</p>
-                     <div className="flex flex-wrap justify-center sm:justify-start gap-x-4 gap-y-2 text-sm text-gray-600">
+                     <h1 className="text-2xl sm:text-3xl font-extrabold text-black mb-2">MANIRAJA NACHIMUTHU</h1>
+                     <p className="text-emerald-600 font-bold text-base mb-4">Trading System Developer | Python | UI/UX | Automation Specialist</p>
+                     <div className="flex flex-wrap justify-center sm:justify-start gap-x-4 gap-y-2 text-xs sm:text-sm text-gray-600">
                        <span>📞 +91-91590 36301</span>
                        <span>✉️ manirajankg@gmail.com</span>
                        <span>📍 Namakkal, Tamil Nadu, India</span>
