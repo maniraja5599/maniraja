@@ -505,12 +505,12 @@ const App = () => {
             </g>
           </svg>
 
-          <div className="relative z-10 flex min-h-[calc(85vh-7rem)] flex-col items-start gap-10 sm:min-h-[calc(85vh-8rem)] sm:items-center md:min-h-[calc(85vh-10rem)] lg:flex-row lg:items-center lg:justify-between">
-            <div className="max-w-3xl space-y-8">
-              <div className="inline-flex items-center space-x-2 rounded-full border border-emerald-500/20 bg-emerald-950/30 px-3 py-1 text-xs font-medium text-emerald-400 animate-pulse">
-                <Activity size={12} />
-                <span>Available for new opportunities</span>
-              </div>
+           <div className="relative z-10 flex min-h-[calc(85vh-7rem)] flex-col items-start gap-10 sm:min-h-[calc(85vh-8rem)] sm:items-center md:min-h-[calc(85vh-10rem)] lg:flex-row lg:items-center lg:justify-between">
+             <div className="max-w-3xl space-y-8">
+               <div className="inline-flex items-center space-x-2 rounded-full border border-emerald-500/20 bg-emerald-950/30 px-3 py-1 text-xs font-medium text-emerald-400 animate-pulse">
+                 <Activity size={12} />
+                 <span>Available for new opportunities | 5+ Years Experience</span>
+               </div>
 
                <div className="space-y-4">
                  <div className="relative inline-block">
@@ -530,8 +530,28 @@ const App = () => {
                </div>
 
                <p className="max-w-xl border-l-2 border-emerald-500/80 pl-4 py-2 text-base italic font-medium leading-relaxed text-slate-300 sm:pl-6 sm:text-lg md:text-xl">
-                 "Building intelligent trading systems & real-time applications"
+                Building intelligent trading systems & real-time applications
                </p>
+
+               {/* Stats Bar */}
+               <div className="flex flex-wrap gap-4 pt-2">
+                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900/50 border border-slate-800">
+                   <span className="text-lg font-bold text-emerald-400">30+</span>
+                   <span className="text-xs text-slate-400">Projects</span>
+                 </div>
+                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900/50 border border-slate-800">
+                   <span className="text-lg font-bold text-blue-400">5+</span>
+                   <span className="text-xs text-slate-400">Years</span>
+                 </div>
+                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900/50 border border-slate-800">
+                   <span className="text-lg font-bold text-cyan-400">100+</span>
+                   <span className="text-xs text-slate-400">Community</span>
+                 </div>
+                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900/50 border border-slate-800">
+                   <span className="text-lg font-bold text-purple-400">6</span>
+                   <span className="text-xs text-slate-400">Languages</span>
+                 </div>
+               </div>
 
                {/* Additional Details */}
                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4">
@@ -778,7 +798,29 @@ const App = () => {
             <div className="p-3 bg-slate-900 rounded-lg text-emerald-400"><Code size={24} /></div>
             <h2 className="text-3xl font-bold text-white">Technical Arsenal</h2>
           </div>
-          
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+            {/* Summary Stats */}
+            <div className="md:col-span-2 grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="bg-gradient-to-br from-emerald-900/40 to-emerald-950/30 border border-emerald-500/30 rounded-xl p-5 text-center">
+                <div className="text-3xl font-black text-emerald-400 mb-1">30+</div>
+                <div className="text-xs text-emerald-300/80 uppercase tracking-wide">Projects Built</div>
+              </div>
+              <div className="bg-gradient-to-br from-blue-900/40 to-blue-950/30 border border-blue-500/30 rounded-xl p-5 text-center">
+                <div className="text-3xl font-black text-blue-400 mb-1">5+</div>
+                <div className="text-xs text-blue-300/80 uppercase tracking-wide">Years Experience</div>
+              </div>
+              <div className="bg-gradient-to-br from-cyan-900/40 to-cyan-950/30 border border-cyan-500/30 rounded-xl p-5 text-center">
+                <div className="text-3xl font-black text-cyan-400 mb-1">6</div>
+                <div className="text-xs text-cyan-300/80 uppercase tracking-wide">Languages</div>
+              </div>
+              <div className="bg-gradient-to-br from-purple-900/40 to-purple-950/30 border border-purple-500/30 rounded-xl p-5 text-center">
+                <div className="text-3xl font-black text-purple-400 mb-1">100+</div>
+                <div className="text-xs text-purple-300/80 uppercase tracking-wide">Community</div>
+              </div>
+            </div>
+          </div>
+
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 hover:border-slate-700 transition-colors">
               <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
@@ -1132,11 +1174,23 @@ const App = () => {
                  <section className="bg-gray-50 p-5 rounded-lg border-l-4 border-emerald-500">
                    <h2 className="text-xl font-bold text-black mb-3">PROFESSIONAL SUMMARY</h2>
                    <p className="leading-relaxed text-gray-700">
-                     Innovative and solutions-driven <strong className="text-emerald-600">Trading System Developer</strong> with 5+ years of hands-on experience in system architecture, real-time automation, and business operations management. Self-taught pioneer who independently designed and deployed a comprehensive Borewell Management System using Google Sheets and AppSheet before AI adoption, demonstrating exceptional problem-solving and system design capabilities.
+                     Innovative and solutions-driven <strong className="text-emerald-600">Trading System Developer</strong> with 5+ years of hands-on experience in system architecture, real-time automation, and business operations management. Self-taught pioneer who independently designed and deployed a comprehensive Borewell Management System using Google Sheets and AppSheet <strong className="text-blue-600">before AI adoption</strong>, demonstrating exceptional problem-solving and system design capabilities.
                    </p>
                    <p className="leading-relaxed text-gray-700 mt-3">
-                     Currently specializing in developing <strong className="text-blue-600">advanced algorithmic trading systems</strong>, real-time web dashboards with WebSocket integrations, API connectors for multiple platforms (TradingView, MetaTrader 5), and automated operational tools. Founder of <strong className="text-purple-600">FiFTO Trading Community</strong>, an educational Portfolio Management Service providing structured mentorship and systematic trading strategies.
+                     Currently specializing in developing <strong className="text-purple-600">advanced algorithmic trading systems</strong>, real-time web dashboards with WebSocket integrations, API connectors for multiple platforms (TradingView, MetaTrader 5), and automated operational tools. Founder of <strong className="text-amber-600">FiFTO Trading Community</strong>, an educational Portfolio Management Service providing structured mentorship and systematic trading strategies to 100+ members.
                    </p>
+
+                   <div className="mt-4 p-3 bg-white border border-gray-200 rounded-lg">
+                     <h3 className="text-sm font-bold text-black mb-2">🎯 Key Highlights</h3>
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-gray-700">
+                       <div>• Built and deployed <strong>30+ projects</strong> across trading, automation & web</div>
+                       <div>• Created <strong>FiFTO Scanner</strong> with intelligent zone detection</div>
+                       <div>• Architected <strong>real-time WebSocket systems</strong> for live data</div>
+                       <div>• Developed <strong>Telegram bot network</strong> for automated alerts</div>
+                       <div>• Runs <strong>FiFTO Trading Community</strong> with 100+ active traders</div>
+                       <div>• Built <strong>Borewell Management System</strong> (pre-AI era Google Sheets + AppSheet)</div>
+                     </div>
+                   </div>
                  </section>
 
                  {/* Skills */}
