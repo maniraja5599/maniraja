@@ -62,6 +62,8 @@ const App = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [showResume, setShowResume] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDownloadingResume, setIsDownloadingResume] = useState(false);
+  const resumeContentRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -84,23 +86,90 @@ const App = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const downloadPDF = () => {
-    const resumeContent = document.getElementById('resume-content');
-    if (!resumeContent) return;
+  const waitForImages = async (container) => {
+    const images = Array.from(container.querySelectorAll('img'));
+
+    await Promise.all(
+      images.map((image) => {
+        if (image.complete) {
+          return Promise.resolve();
+        }
+
+        return new Promise((resolve) => {
+          image.addEventListener('load', resolve, { once: true });
+          image.addEventListener('error', resolve, { once: true });
+        });
+      }),
+    );
+  };
+
+  const waitForNextPaint = () =>
+    new Promise((resolve) => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(resolve);
+      });
+    });
+
+  const downloadPDF = async () => {
+    const resumeContent = resumeContentRef.current;
+    if (!resumeContent || isDownloadingResume) return;
+
+    setIsDownloadingResume(true);
+
+    const exportShell = document.createElement('div');
+    exportShell.setAttribute('data-resume-export-shell', 'true');
+    exportShell.style.position = 'fixed';
+    exportShell.style.inset = '0';
+    exportShell.style.background = '#ffffff';
+    exportShell.style.overflow = 'auto';
+    exportShell.style.zIndex = '9999';
+    exportShell.style.padding = '20px 0';
+
+    const exportCard = resumeContent.cloneNode(true);
+    exportCard.id = 'resume-content-export';
+    exportCard.style.width = '794px';
+    exportCard.style.maxWidth = '794px';
+    exportCard.style.minHeight = 'auto';
+    exportCard.style.margin = '0 auto';
+    exportCard.style.padding = '28px 32px';
+    exportCard.style.background = '#ffffff';
+    exportCard.style.color = '#000000';
+    exportCard.style.overflow = 'visible';
+    exportCard.style.boxShadow = 'none';
+    exportCard.style.borderRadius = '0';
+
+    exportCard.querySelectorAll('.print\\:hidden').forEach((node) => {
+      node.style.display = 'none';
+    });
+
+    exportShell.appendChild(exportCard);
+    document.body.appendChild(exportShell);
 
     const options = {
-      margin: 10,
+      margin: [6, 6, 6, 6],
       filename: 'ManiRaja_Resume.pdf',
       image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      html2canvas: {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: '#ffffff',
+        scrollX: 0,
+        scrollY: 0,
+        windowWidth: 794,
+      },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      pagebreak: { mode: ['css', 'legacy'] },
     };
 
-    html2pdf()
-      .set(options)
-      .from(resumeContent)
-       .save();
-   };
+    try {
+      await waitForImages(exportCard);
+      await waitForNextPaint();
+      await html2pdf().set(options).from(exportCard).save();
+    } finally {
+      exportShell.remove();
+      setIsDownloadingResume(false);
+    }
+  };
 
    const scrollTo = (id) => {
      const element = document.getElementById(id);
@@ -875,7 +944,7 @@ const App = () => {
                 </div>
               </div>
               <a 
-                href="https://github.com/maniraja5599" 
+                href="https://github.com/maniraja5599/" 
                 target="_blank" 
                 rel="noreferrer"
                 className="text-sm text-emerald-400 hover:text-emerald-300 flex items-center gap-1"
@@ -1087,7 +1156,7 @@ const App = () => {
                 <span className="text-xs text-slate-500 group-hover:text-blue-500">+91-91590 36301</span>
               </a>
 
-              <a href="https://github.com/maniraja5599" target="_blank" rel="noreferrer" className="group flex flex-col items-center justify-center p-6 bg-slate-800/50 hover:bg-purple-500/10 border border-slate-700 hover:border-purple-500/50 rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-500/20 backdrop-blur-sm">
+              <a href="https://github.com/maniraja5599/" target="_blank" rel="noreferrer" className="group flex flex-col items-center justify-center p-6 bg-slate-800/50 hover:bg-purple-500/10 border border-slate-700 hover:border-purple-500/50 rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-500/20 backdrop-blur-sm">
                 <Github className="mb-3 text-purple-400 group-hover:text-purple-300" size={28} />
                 <span className="font-semibold text-base text-slate-300 group-hover:text-purple-300 mb-1">GitHub</span>
                 <span className="text-xs text-slate-500 group-hover:text-purple-500">@maniraja5599</span>
@@ -1095,7 +1164,7 @@ const App = () => {
             </div>
 
             <div className="relative z-10 flex justify-center gap-5 pt-6 border-t border-slate-800/50">
-              <a href="https://github.com/maniraja5599" target="_blank" rel="noreferrer" className="p-3 bg-slate-800/50 hover:bg-emerald-500/10 rounded-full text-[#f0f0f0] hover:text-emerald-400 border border-slate-700 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/20 transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm" title="GitHub Profile">
+              <a href="https://github.com/maniraja5599/" target="_blank" rel="noreferrer" className="p-3 bg-slate-800/50 hover:bg-emerald-500/10 rounded-full text-[#f0f0f0] hover:text-emerald-400 border border-slate-700 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/20 transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm" title="GitHub Profile">
                 <Github size={22} />
               </a>
               <a href="https://in.linkedin.com/in/maniraja5599" target="_blank" rel="noreferrer" className="p-3 bg-slate-800/50 hover:bg-blue-600/10 rounded-full text-[#0077b5] hover:text-blue-400 border border-slate-700 hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/20 transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm" title="LinkedIn Profile">
@@ -1130,10 +1199,11 @@ const App = () => {
               <div className="flex gap-3">
                 <button 
                   onClick={downloadPDF}
-                  className="px-4 py-2 rounded-lg bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-colors flex items-center gap-2 text-sm font-bold"
+                  disabled={isDownloadingResume}
+                  className="px-4 py-2 rounded-lg bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-colors flex items-center gap-2 text-sm font-bold disabled:cursor-wait disabled:bg-emerald-300"
                 >
                   <Download size={18} />
-                  <span className="hidden sm:inline">Download PDF</span>
+                  <span className="hidden sm:inline">{isDownloadingResume ? 'Preparing PDF...' : 'Download PDF'}</span>
                 </button>
                 <button 
                   onClick={() => setShowResume(false)}
@@ -1146,10 +1216,10 @@ const App = () => {
             
 
              {/* Resume Content - Printable Area */}
-             <div id="resume-content" className="p-6 sm:p-10 overflow-y-auto text-slate-300 space-y-8 bg-white text-black print:overflow-visible print:p-0">
+             <div ref={resumeContentRef} id="resume-content" className="p-6 sm:p-10 overflow-y-auto text-slate-300 space-y-8 bg-white text-black print:overflow-visible print:p-0 print:space-y-4 print:text-[11px] print:leading-[1.35]">
                 
                  {/* Resume Header */}
-                 <div className="border-b border-gray-300 pb-6 flex flex-col sm:flex-row items-center sm:items-start gap-6">
+                 <div className="border-b border-gray-300 pb-6 flex flex-col sm:flex-row items-center sm:items-start gap-6 print:pb-4 print:gap-4">
                    <img 
                      src="/profile.png" 
                      alt="Maniraja Nachimuthu" 
@@ -1160,9 +1230,9 @@ const App = () => {
                      }}
                    />
                    <div className="text-center sm:text-left flex-1">
-                     <h1 className="text-2xl sm:text-3xl font-extrabold text-black mb-2">MANIRAJA NACHIMUTHU</h1>
-                     <p className="text-emerald-600 font-bold text-base mb-4">Trading System Developer | Python | UI/UX | Automation Specialist</p>
-                     <div className="flex flex-wrap justify-center sm:justify-start gap-x-4 gap-y-2 text-xs sm:text-sm text-gray-600">
+                     <h1 className="text-2xl sm:text-3xl font-extrabold text-black mb-2 print:text-[22px] print:mb-1">MANIRAJA NACHIMUTHU</h1>
+                     <p className="text-emerald-600 font-bold text-base mb-4 print:text-[12px] print:mb-2">Trading System Developer | Python | UI/UX | Automation Specialist</p>
+                     <div className="flex flex-wrap justify-center sm:justify-start gap-x-4 gap-y-2 text-xs sm:text-sm text-gray-600 print:text-[10px] print:gap-x-3 print:gap-y-1">
                        <span>📞 +91-91590 36301</span>
                        <span>✉️ manirajankg@gmail.com</span>
                        <span>📍 Namakkal, Tamil Nadu, India</span>
@@ -1171,18 +1241,18 @@ const App = () => {
                  </div>
 
                  {/* Summary */}
-                 <section className="bg-gray-50 p-5 rounded-lg border-l-4 border-emerald-500">
-                   <h2 className="text-xl font-bold text-black mb-3">PROFESSIONAL SUMMARY</h2>
-                   <p className="leading-relaxed text-gray-700">
+                 <section className="bg-gray-50 p-5 rounded-lg border-l-4 border-emerald-500 print:p-3 print:rounded-md">
+                   <h2 className="text-xl font-bold text-black mb-3 print:text-[14px] print:mb-2">PROFESSIONAL SUMMARY</h2>
+                   <p className="leading-relaxed text-gray-700 print:leading-[1.35]">
                      Innovative and solutions-driven <strong className="text-emerald-600">Trading System Developer</strong> with 5+ years of hands-on experience in system architecture, real-time automation, and business operations management. Self-taught pioneer who independently designed and deployed a comprehensive Borewell Management System using Google Sheets and AppSheet <strong className="text-blue-600">before AI adoption</strong>, demonstrating exceptional problem-solving and system design capabilities.
                    </p>
-                   <p className="leading-relaxed text-gray-700 mt-3">
+                   <p className="leading-relaxed text-gray-700 mt-3 print:mt-2 print:leading-[1.35]">
                      Currently specializing in developing <strong className="text-purple-600">advanced algorithmic trading systems</strong>, real-time web dashboards with WebSocket integrations, API connectors for multiple platforms (TradingView, MetaTrader 5), and automated operational tools. Founder of <strong className="text-amber-600">FiFTO Trading Community</strong>, an educational Portfolio Management Service providing structured mentorship and systematic trading strategies to 100+ members.
                    </p>
 
-                   <div className="mt-4 p-3 bg-white border border-gray-200 rounded-lg">
-                     <h3 className="text-sm font-bold text-black mb-2">🎯 Key Highlights</h3>
-                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-gray-700">
+                   <div className="mt-4 p-3 bg-white border border-gray-200 rounded-lg print:mt-3 print:p-2.5 print:rounded-md">
+                     <h3 className="text-sm font-bold text-black mb-2 print:text-[11px] print:mb-1.5">Key Highlights</h3>
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-gray-700 print:gap-x-3 print:gap-y-1 print:text-[10px]">
                        <div>• Built and deployed <strong>30+ projects</strong> across trading, automation & web</div>
                        <div>• Created <strong>FiFTO Scanner</strong> with intelligent zone detection</div>
                        <div>• Architected <strong>real-time WebSocket systems</strong> for live data</div>
@@ -1195,56 +1265,56 @@ const App = () => {
 
                  {/* Skills */}
                  <section>
-                   <h2 className="text-xl font-bold text-black border-l-4 border-emerald-500 pl-3 mb-4">TECHNICAL SKILLS</h2>
+                   <h2 className="text-xl font-bold text-black border-l-4 border-emerald-500 pl-3 mb-4 print:text-[14px] print:mb-2">TECHNICAL SKILLS</h2>
                    
-                   <div className="mb-4">
-                     <h3 className="text-lg font-semibold text-black mb-2">Programming & Scripting</h3>
-                     <div className="flex flex-wrap gap-2">
+                   <div className="mb-4 print:mb-3">
+                     <h3 className="text-lg font-semibold text-black mb-2 print:text-[12px] print:mb-1.5">Programming & Scripting</h3>
+                     <div className="flex flex-wrap gap-2 print:gap-1.5">
                        {['Python (Advanced)', 'Pine Script (TradingView)', 'JavaScript', 'TypeScript', 'HTML5/CSS3', 'SQL', 'Bash/Shell'].map((skill, idx) => (
-                         <span key={idx} className="px-3 py-1.5 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-md text-sm">{skill}</span>
+                         <span key={idx} className="px-3 py-1.5 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-md text-sm print:px-2 print:py-1 print:text-[10px]">{skill}</span>
                        ))}
                      </div>
                    </div>
 
-                   <div className="mb-4">
-                     <h3 className="text-lg font-semibold text-black mb-2">Trading Systems & Strategies</h3>
-                     <div className="flex flex-wrap gap-2">
+                   <div className="mb-4 print:mb-3">
+                     <h3 className="text-lg font-semibold text-black mb-2 print:text-[12px] print:mb-1.5">Trading Systems & Strategies</h3>
+                     <div className="flex flex-wrap gap-2 print:gap-1.5">
                        {['Algorithmic Trading', 'Options Trading', 'VWAP & Momentum', 'Supply & Demand Zones', 'Math-Based Entries', 'Real-Time Alerts', 'Telegram Bot Integration', 'WebSocket APIs'].map((skill, idx) => (
-                         <span key={idx} className="px-3 py-1.5 bg-blue-50 text-blue-800 border border-blue-200 rounded-md text-sm">{skill}</span>
+                         <span key={idx} className="px-3 py-1.5 bg-blue-50 text-blue-800 border border-blue-200 rounded-md text-sm print:px-2 print:py-1 print:text-[10px]">{skill}</span>
                        ))}
                      </div>
                    </div>
 
-                   <div className="mb-4">
-                     <h3 className="text-lg font-semibold text-black mb-2">Tools & Platforms</h3>
-                     <div className="flex flex-wrap gap-2">
+                   <div className="mb-4 print:mb-3">
+                     <h3 className="text-lg font-semibold text-black mb-2 print:text-[12px] print:mb-1.5">Tools & Platforms</h3>
+                     <div className="flex flex-wrap gap-2 print:gap-1.5">
                        {['TradingView', 'MetaTrader 5', 'React/Next.js', 'Git/GitHub', 'VS Code', 'Render', 'Netlify', 'Vercel', 'Google Sheets/AppSheet', 'Postman'].map((skill, idx) => (
-                         <span key={idx} className="px-3 py-1.5 bg-purple-50 text-purple-800 border border-purple-200 rounded-md text-sm">{skill}</span>
+                         <span key={idx} className="px-3 py-1.5 bg-purple-50 text-purple-800 border border-purple-200 rounded-md text-sm print:px-2 print:py-1 print:text-[10px]">{skill}</span>
                        ))}
                      </div>
                    </div>
 
-                   <div className="mb-4">
-                     <h3 className="text-lg font-semibold text-black mb-2">Core Competencies</h3>
-                     <div className="flex flex-wrap gap-2">
+                   <div className="mb-4 print:mb-0">
+                     <h3 className="text-lg font-semibold text-black mb-2 print:text-[12px] print:mb-1.5">Core Competencies</h3>
+                     <div className="flex flex-wrap gap-2 print:gap-1.5">
                        {['System Architecture', 'API Integration', 'Real-Time Data Processing', 'Dashboard Design', 'Automation', 'Problem-Solving', 'Full-Stack Development', 'UI/UX Design'].map((skill, idx) => (
-                         <span key={idx} className="px-3 py-1.5 bg-amber-50 text-amber-800 border border-amber-200 rounded-md text-sm">{skill}</span>
+                         <span key={idx} className="px-3 py-1.5 bg-amber-50 text-amber-800 border border-amber-200 rounded-md text-sm print:px-2 print:py-1 print:text-[10px]">{skill}</span>
                        ))}
                      </div>
                    </div>
                  </section>
 
                  {/* Experience */}
-                 <section>
-                   <h2 className="text-xl font-bold text-black border-l-4 border-emerald-500 pl-3 mb-4">PROFESSIONAL EXPERIENCE</h2>
+                 <section className="print-page-break">
+                   <h2 className="text-xl font-bold text-black border-l-4 border-emerald-500 pl-3 mb-4 print:text-[14px] print:mb-2">PROFESSIONAL EXPERIENCE</h2>
                    
-                   <div className="space-y-6">
-                     <div>
-                       <div className="flex justify-between items-start mb-1">
-                         <h3 className="text-lg font-bold text-black">Independent System Developer <span className="text-emerald-600 text-sm font-normal">| Trading Dashboards & Automation</span></h3>
-                         <span className="text-sm font-mono text-gray-500">2020 – Present</span>
+                   <div className="space-y-6 print:space-y-4">
+                     <div className="print:break-inside-avoid">
+                       <div className="flex justify-between items-start mb-1 print:mb-0.5">
+                         <h3 className="text-lg font-bold text-black print:text-[12px]">Independent System Developer <span className="text-emerald-600 text-sm font-normal print:text-[10px]">| Trading Dashboards & Automation</span></h3>
+                         <span className="text-sm font-mono text-gray-500 print:text-[10px]">2020 – Present</span>
                        </div>
-                       <ul className="list-disc list-inside text-gray-700 space-y-1 ml-2 text-sm">
+                       <ul className="list-disc list-inside text-gray-700 space-y-1 ml-2 text-sm print:text-[10px] print:space-y-0.5">
                          <li>Architect and build highly functional, real-time trading dashboards with live data visualization and multi-timeframe analysis.</li>
                          <li>Engineered robust API integrations connecting TradingView, MetaTrader 5, and custom trading platforms for seamless data flow.</li>
                          <li>Automate daily token generation, execute math-based entry algorithms, and deploy real-time Telegram alert bots for instant trade signaling.</li>
@@ -1253,47 +1323,47 @@ const App = () => {
                        </ul>
                      </div>
 
-                     <div>
-                       <div className="flex justify-between items-start mb-1">
-                         <h3 className="text-lg font-bold text-black">Founder & Lead Educator <span className="text-emerald-600 text-sm font-normal">| FiFTO Trading Community</span></h3>
-                         <span className="text-sm font-mono text-gray-500">2019 – Present</span>
+                     <div className="print:break-inside-avoid">
+                       <div className="flex justify-between items-start mb-1 print:mb-0.5">
+                         <h3 className="text-lg font-bold text-black print:text-[12px]">Founder & Lead Educator <span className="text-emerald-600 text-sm font-normal print:text-[10px]">| FiFTO Trading Community</span></h3>
+                         <span className="text-sm font-mono text-gray-500 print:text-[10px]">2019 – Present</span>
                        </div>
-                       <ul className="list-disc list-inside text-gray-700 space-y-1 ml-2 text-sm">
+                       <ul className="list-disc list-inside text-gray-700 space-y-1 ml-2 text-sm print:text-[10px] print:space-y-0.5">
                          <li>Lead an educational Portfolio Management Service (PMS) model named "FiFTO" with 100+ active members.</li>
                          <li>Provide structured mentorship, real-time market analysis, and educate community members on systematic, mathematics-based trading strategies.</li>
                         <li>Conduct regular webinars, live trading sessions, and strategy reviews to foster a learning-focused trading environment.</li>
                        </ul>
                      </div>
 
-                     <div>
-                       <div className="flex justify-between items-start mb-1">
-                         <h3 className="text-lg font-bold text-black">Owner & Founder <span className="text-emerald-600 text-sm font-normal">| Anjaneya Borewells, Namakkal</span></h3>
-                         <span className="text-sm font-mono text-gray-500">2019 – Present</span>
+                     <div className="print:break-inside-avoid">
+                       <div className="flex justify-between items-start mb-1 print:mb-0.5">
+                         <h3 className="text-lg font-bold text-black print:text-[12px]">Owner & Founder <span className="text-emerald-600 text-sm font-normal print:text-[10px]">| Anjaneya Borewells, Namakkal</span></h3>
+                         <span className="text-sm font-mono text-gray-500 print:text-[10px]">2019 – Present</span>
                        </div>
-                       <ul className="list-disc list-inside text-gray-700 space-y-1 ml-2 text-sm">
+                       <ul className="list-disc list-inside text-gray-700 space-y-1 ml-2 text-sm print:text-[10px] print:space-y-0.5">
                          <li>Operate modern borewell drilling services across Namakkal district with a focus on precision and reliability.</li>
                          <li>Independently designed and deployed a full-scale <strong>Borewell Management System</strong> using Google Sheets + AppSheet with features: real-time billing, operations tracking, client management, inventory control, and automated reports.</li>
                          <li>System reduced administrative overhead by 60% and enabled complete field-to-office data synchronization.</li>
                        </ul>
                      </div>
 
-                     <div>
-                       <div className="flex justify-between items-start mb-1">
-                         <h3 className="text-lg font-bold text-black">Borewell Manager <span className="text-emerald-600 text-sm font-normal">| Operations & Management</span></h3>
-                         <span className="text-sm font-mono text-gray-500">2016 – 2018</span>
+                     <div className="print:break-inside-avoid">
+                       <div className="flex justify-between items-start mb-1 print:mb-0.5">
+                         <h3 className="text-lg font-bold text-black print:text-[12px]">Borewell Manager <span className="text-emerald-600 text-sm font-normal print:text-[10px]">| Operations & Management</span></h3>
+                         <span className="text-sm font-mono text-gray-500 print:text-[10px]">2016 – 2018</span>
                        </div>
-                       <ul className="list-disc list-inside text-gray-700 space-y-1 ml-2 text-sm">
+                       <ul className="list-disc list-inside text-gray-700 space-y-1 ml-2 text-sm print:text-[10px] print:space-y-0.5">
                          <li>Managed end-to-end field logistics, crew operations, equipment maintenance, and client relationships for borewell drilling services.</li>
                          <li>This hands-on experience laid the groundwork for successfully launching my own borewell business and understanding operational workflows.</li>
                        </ul>
                      </div>
 
-                     <div>
-                       <div className="flex justify-between items-start mb-1">
-                         <h3 className="text-lg font-bold text-black">Networking Engineer <span className="text-emerald-600 text-sm font-normal">| ICE Networking</span></h3>
-                         <span className="text-sm font-mono text-gray-500">2015 – 2016 (6 Months)</span>
+                     <div className="print:break-inside-avoid">
+                       <div className="flex justify-between items-start mb-1 print:mb-0.5">
+                         <h3 className="text-lg font-bold text-black print:text-[12px]">Networking Engineer <span className="text-emerald-600 text-sm font-normal print:text-[10px]">| ICE Networking</span></h3>
+                         <span className="text-sm font-mono text-gray-500 print:text-[10px]">2015 – 2016 (6 Months)</span>
                        </div>
-                       <ul className="list-disc list-inside text-gray-700 space-y-1 ml-2 text-sm">
+                       <ul className="list-disc list-inside text-gray-700 space-y-1 ml-2 text-sm print:text-[10px] print:space-y-0.5">
                          <li>Built foundational technical skills by configuring real-time systems, designing initial dashboard concepts, and implementing internal automation tools.</li>
                          <li>Worked with network infrastructure and data systems, gaining exposure to operational technology that later influenced trading system design.</li>
                        </ul>
@@ -1302,58 +1372,58 @@ const App = () => {
                  </section>
 
                  {/* Education */}
-                 <section>
-                   <h2 className="text-xl font-bold text-black border-l-4 border-emerald-500 pl-3 mb-4">EDUCATION</h2>
+                 <section className="print:pt-1">
+                   <h2 className="text-xl font-bold text-black border-l-4 border-emerald-500 pl-3 mb-4 print:text-[14px] print:mb-2">EDUCATION</h2>
                    <div>
-                     <div className="flex justify-between items-start mb-1">
-                       <h3 className="text-lg font-bold text-black">B.Tech Information Technology</h3>
-                       <span className="text-sm font-mono text-gray-500">2010 – 2014</span>
+                     <div className="flex justify-between items-start mb-1 print:mb-0.5">
+                       <h3 className="text-lg font-bold text-black print:text-[12px]">B.Tech Information Technology</h3>
+                       <span className="text-sm font-mono text-gray-500 print:text-[10px]">2010 – 2014</span>
                      </div>
-                     <p className="text-sm text-gray-700">Adhiyamaan College Of Engineering</p>
+                     <p className="text-sm text-gray-700 print:text-[10px]">Adhiyamaan College Of Engineering</p>
                    </div>
                  </section>
 
                  {/* Projects */}
-                 <section className="print:break-inside-avoid">
-                   <h2 className="text-xl font-bold text-black border-l-4 border-emerald-500 pl-3 mb-4">FEATURED PROJECTS</h2>
-                   <div className="space-y-4 text-sm">
-                     <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                 <section className="print:break-inside-avoid print:pt-1">
+                   <h2 className="text-xl font-bold text-black border-l-4 border-emerald-500 pl-3 mb-4 print:text-[14px] print:mb-2">FEATURED PROJECTS</h2>
+                   <div className="space-y-4 text-sm print:space-y-2 print:text-[10px]">
+                     <div className="p-3 bg-gray-50 rounded-lg border border-gray-200 print:p-2.5">
                        <div className="flex justify-between items-start mb-1">
                          <strong className="text-black text-base">FiFTO Trading Dashboard</strong>
                          <span className="text-emerald-600 text-xs font-normal uppercase tracking-wide">Live Dashboard</span>
                        </div>
                        <p className="text-gray-700 mb-2">Comprehensive equity trading dashboard with real-time portfolio tracking, closed trade review, performance analytics, and multi-timeframe analysis. Features live WebSocket connections for instant market data updates.</p>
-                       <span className="text-emerald-600 text-xs">https://fifto-eq-trade.lovable.app/</span>
+                       <span className="text-emerald-600 text-xs break-all">https://fifto-eq-trade.lovable.app/</span>
                      </div>
 
-                     <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                     <div className="p-3 bg-gray-50 rounded-lg border border-gray-200 print:p-2.5">
                        <div className="flex justify-between items-start mb-1">
                          <strong className="text-black text-base">FiFTO Scanner</strong>
                          <span className="text-blue-600 text-xs font-normal uppercase tracking-wide">Detection Engine</span>
                        </div>
                        <p className="text-gray-700 mb-2">Zone breakout detection engine with momentum analytics, customizable watchlists, and instant Telegram-based reporting. Identifies potential trading opportunities based on supply/demand zones.</p>
-                       <span className="text-blue-600 text-xs">https://fifto-scanner.onrender.com/</span>
+                       <span className="text-blue-600 text-xs break-all">https://fifto-scanner.onrender.com/</span>
                      </div>
 
-                     <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                     <div className="p-3 bg-gray-50 rounded-lg border border-gray-200 print:p-2.5">
                        <div className="flex justify-between items-start mb-1">
                          <strong className="text-black text-base">Trading Strategy App</strong>
                          <span className="text-purple-600 text-xs font-normal uppercase tracking-wide">Strategy Platform</span>
                        </div>
                        <p className="text-gray-700 mb-2">Performance-driven strategy platform focused on wealth management presentation, trust-building features, and live trade tracking for educational purposes.</p>
-                       <span className="text-purple-600 text-xs">https://fifto.netlify.app/</span>
+                       <span className="text-purple-600 text-xs break-all">https://fifto.netlify.app/</span>
                      </div>
 
-                     <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                     <div className="p-3 bg-gray-50 rounded-lg border border-gray-200 print:hidden">
                        <div className="flex justify-between items-start mb-1">
                          <strong className="text-black text-base">Live TV Anywhere</strong>
                          <span className="text-cyan-600 text-xs font-normal uppercase tracking-wide">Media Control</span>
                        </div>
                        <p className="text-gray-700 mb-2">Remote-friendly live TV browsing experience with channel navigation, language filters, and display control capabilities for streaming platforms.</p>
-                       <span className="text-cyan-600 text-xs">https://live-view-anywhere.lovable.app</span>
+                       <span className="text-cyan-600 text-xs break-all">https://live-view-anywhere.lovable.app</span>
                      </div>
 
-                     <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                     <div className="p-3 bg-gray-50 rounded-lg border border-gray-200 print:hidden">
                        <div className="flex justify-between items-start mb-1">
                          <strong className="text-black text-base">Anjaneya Borewells</strong>
                          <span className="text-amber-600 text-xs font-normal uppercase tracking-wide">Business Website</span>
@@ -1362,7 +1432,7 @@ const App = () => {
                        <span className="text-amber-600 text-xs">https://anjaneyaborewells.com/</span>
                      </div>
 
-                     <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                     <div className="p-3 bg-gray-50 rounded-lg border border-gray-200 print:hidden">
                        <div className="flex justify-between items-start mb-1">
                          <strong className="text-black text-base">Eyas Drapist E-commerce</strong>
                          <span className="text-rose-600 text-xs font-normal uppercase tracking-wide">E-Commerce</span>

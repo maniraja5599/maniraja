@@ -187,7 +187,7 @@ I'm always open to discussing:
 **📧 Email:** manirajankg@gmail.com  
 **📱 Phone:** +91-91590 36301  
 **🌐 LinkedIn:** [maniraja5599](https://in.linkedin.com/in/maniraja5599)  
-**💻 GitHub:** [maniraja5599](https://github.com/maniraja5599)  
+**💻 GitHub:** [maniraja5599](https://github.com/maniraja5599/)  
 **📱 Telegram:** [@maniraja5599](https://t.me/maniraja5599)
 
 ---

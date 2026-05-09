@@ -109,7 +109,37 @@ body {
 }
 
 @media print {
+  @page {
+    size: A4;
+    margin: 10mm;
+  }
+
+  html,
   body {
     background: white;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  #root {
+    margin: 0;
+    padding: 0;
+  }
+
+  #resume-content {
+    overflow: visible !important;
+  }
+
+  .print-page-break {
+    break-before: page;
+    page-break-before: always;
+  }
+
+  #resume-content * {
+    break-inside: avoid-page;
   }
 }
